@@ -379,7 +379,7 @@
 									<String>TEI</String>
 								</field>
 								<field name="fileName">
-									<String>*.xml, ${xpath_eval(contains(${cf},'jraTexts/data/'))}</String>
+									<String>about*.xml</String>
 								</field>
 								<field name="publicID">
 									<String>*</String>

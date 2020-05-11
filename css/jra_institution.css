@@ -1,190 +1,265 @@
-org {
-  border-radius: 5px;
-  background-color: #ffd9ac;
-  padding: 30px;
-}
-org:before{
-  display: block;
-    float: left;
-    margin-right: 10px;
-    padding: 10px;
-    width: 80%;
-    border: 1px solid #cccccc;
-    font-size: 18px;
-    font-weight: bold;
-    content: "ID: " attr(id) /*oxy_button(
-         action, oxy_action(
-            name, 'newID', 
-            description, 'generates a new ID', 
-            /\*icon, url('insert.png'),*\/ 
-            operation, 
-             '${id}'),
-         showIcon, true)*/;
-}
-placeName, orgName, function, associatePers, settlement, country, date, founder, idno[type=gnd], idno[type=viaf], note{
-    display: block;
-    float: left;
-    margin-right: 10px;
-    padding: 10px;
-    width: 70%;
-    border: 1px solid #cccccc;
-    font-size: 18px;
-}
-placeName:before{
-  display: inline-block;
-  padding: 0px 10px 0px 0px;
-  content: "Ortsname (nB:"attr(notBefore)" | nA:"attr(notAfter)" | "attr(type)"): ";
-  font-weight: bold;
-}
-placeName[type=street]:before{
-  display: inline-block;
-  padding: 0px 10px 0px 0px;
-  content: "Straße ("attr(type)"): ";
-  font-weight: bold;
-}
-num{
-    color: blue;
-}
-placeName:focus {
-  border: 3px solid #555;
-}
-location {
-  border: 2px solid blue; 
-}
-orgName:before{
-display: inline-block;
-  padding: 0px 10px 0px 0px;
-	content: "Name: ";
-	font-weight: bold;
-}
-orgName:focus {
-  border: 3px solid #555;
-}
-function:before{
-display: inline-block;
-  padding: 0px 10px 0px 0px;
-	content: "Zweck/Aufgabe: ";
-	font-weight: bold;
-}
-function:focus {
-  border: 3px solid #555;
+/*CSS for rendering Institutions in QxygenXML Author Mode (JRA)*/
+/*2020 Dennis Ried*/
+
+TEI:before{
+    content: 'ID: ' attr(xml\:id);
+    border:1px solid black;
 }
 
-settlement:before{
-display: inline-block;
-  padding: 0px 10px 0px 0px;
-	content: "Settlement (from" attr(from) " to " attr(to)"): ";
-	font-weight: bold;
+/*publicationStmt,*/
+publicationStmt > availability,
+bibl > *
+{ display:none;}
+
+TEI,
+fileDesc,
+titleStmt > title,
+orgName,
+org > desc,
+idno,
+event > desc,
+event > desc > date,
+placeName,
+head,
+ref,
+body > div > p
+{
+    display:block;
+    background-color: #bac945;
+    border:1px solid black;
+    visibility:-oxy-collapse-text;
+    margin-bottom:15px
 }
-settlement:focus {
-  border: 3px solid #555;
+
+titleStmt,
+listEvent,
+place,
+bibl,
+org,
+body
+{
+display:block;
+    background-color: #bac945;
+    border:2px solid blue;
+        visibility:-oxy-collapse-text;
 }
-associatePers:before{
-display: inline-block;
-  padding: 0px 10px 0px 0px;
-	content: "Assoziierte Pers: ";
-	font-weight: bold;
+
+event{
+     display:block;
+    background-color: #bac945;
+    border:1px dashed black;
+    visibility:-oxy-collapse-text;
 }
-associatePers:focus {
-  border: 3px solid #555;
+
+idno:after,
+event:after,
+placeName:after,
+orgName:after,
+:not(publicationStmt) > date:after,
+titleStmt > title:after,
+:not(availability) > p > ref:after
+{
+    content:oxy_action(
+              name, 'X', 
+              description, 'Delete an element', 
+              operation, 'ro.sync.ecss.extensions.commons.operations.DeleteElementOperation')
+            ;
 }
-country:before{
-display: inline-block;
-  padding: 0px 10px 0px 0px;
-	content: "Land: ";
-	font-weight: bold;
+
+titleStmt > title,
+orgName,
+org > desc,
+idno,
+placeName,
+head
+{
+     content: oxy_textfield(columns, 25, edit, "#text");
 }
-country:focus {
-  border: 3px solid #555;
+
+*:before{
+    display:inline-block
 }
-country{
-    content:oxy_checkbox(
-        edit, '@key',
-        values, 'D',
-        uncheckedValues, 'Off',
-        labels, 'D'
-) oxy_checkbox(
-        edit, '@key',
-        values, 'CH',
-        uncheckedValues, 'Off',
-        labels, 'CH'
+
+publicationStmt{
+    display:block;
+    border: 2px solid black;
+    background-color: lightgray;
+}
+publicationStmt > publisher{
+    display:block;
+    color:gray;
+    visibility:visible;
+    content:oxy_label(text, "Herausgeber: ", width, 20%)
+
+}
+publicationStmt > date:before{
+    content:oxy_label(text, "Publikationsdatum: ", width, 20%)
+}
+publicationStmt > date{
+    display:block;
+    color:gray;
+    visibility:visible;
+    content:"vom " attr(from) " zum " attr(to)
+    ;
+}
+
+
+head:before{content:oxy_label(text, "Überschrift:", width, 20%, styles,
+      "font-weight:bold;color:black;");}
+
+titleStmt:before{
+    content: oxy_label(text, "Titelei", width, 20%, styles,
+      "font-weight:bold;color:black;");
+}
+titleStmt > title:before{
+    content: oxy_label(text, "Titel der Datei:", width, 20%)
+}
+
+org:before{
+    content: oxy_label(text, "Beschreibung der Institution", width, 20%, styles,
+      "font-weight:bold;color:black;");
+}
+orgName:before{
+    content: oxy_label(text, "Name der Institution", width, 20%);
+}
+org > desc:before{
+    content: oxy_label(text, "Art/Aufgaben", width, 20%);
+}
+idno[type=GND]:before{
+    content: oxy_label(text, "GND:", width, 20%);
+}
+idno[type=VIAF]:before{
+    content: oxy_label(text, "VIAF:", width, 5%) /*oxy_button(action, oxy_action(
+            name, 'VIAF ermitteln', 
+            description, 'Insert an titlePart as last child into title', 
+            icon, url('insert.png'), 
+            operation, 'getVIAF', 
+            arg-fragment, '<titlePart xmlns="http://www.music-encoding.org/ns/mei"></titlePart>',
+            arg-insertLocation, '.',
+            arg-insertPosition, 'Inside as last child'))*/;
+}
+
+listEvent{
+content: oxy_label(text, "Ereignisse", width, 20%, styles,
+      "font-weight:bold;color:black;")
+    oxy_button(action, oxy_action(
+            name, 'Neues Ereignis', 
+            description, 'Insert an event after the current element', 
+            icon, url('insert.png'), 
+            operation, 'InsertFragmentOperation', 
+            arg-fragment, '<event xmlns="http://www.tei-c.org/ns/1.0"><desc></desc></event>',
+            arg-insertLocation, '.',
+            arg-insertPosition, 'After'))
+            ;
+            counter-reset:events;
+            
+            
+}
+event:before{
+    counter-increment:events;
+    font-weight:bold;
+    color:black;
+    content:"Ereignis Nr. " counter(events)  oxy_action(
+                 name, 'validieren',
+                 operation, 'ro.sync.ecss.extensions.commons.operations.ChangeAttributesOperation',
+                 arg-elementLocations, './tei:desc/*',
+                 arg-attributeNames, 'xmlns',
+                 arg-values, '',
+                 arg-removeIfEmpty, 'true'
+                 );
+}
+
+
+event > desc:after{
+	content: oxy_label(text, "\A Beschreibung:", width, 20%)
+      oxy_textArea(
+      edit, '#content',
+      contentType, 'text/xml',
+      rows, 10,
+      columns, 60);
+}
+
+event > desc > date:before{
+    display:block;
+    content:oxy_label(text, "Datum", width, 10%, styles, "font-weight:bold;color:black;");
+}
+event > desc > date{
+    content: oxy_label(text, "Aktion:", width, 10%, styles, "font-weight:normal;color:black;")
+             oxy_combobox(
+                    edit, "@type", 
+                    editable, false,
+                    values, ' ,established, closed, renamed',
+                    labels, ' ,gegründet, aufgegeben, umbenannt')
+             oxy_label(text, "\A Wann:", width, 10%, styles, "font-weight:normal;color:black;")
+                 oxy_textfield(columns, 10, edit, "@when-custom")
+             oxy_label(text, "\A Von:", width, 10%, styles, "font-weight:normal;color:black;")
+                 oxy_textfield(columns, 10, edit, "@from-custom")
+             oxy_label(text, " bis:", width, 10%, styles, "font-weight:normal;color:black;")
+                 oxy_textfield(columns, 10, edit, "@to-custom")
+             oxy_label(text, "\A Nicht vor:", width, 10%, styles, "font-weight:normal;color:black;")
+                 oxy_textfield(columns, 10, edit, "@notBefore-custom")
+             oxy_label(text, " nicht nach:", width, 10%, styles, "font-weight:normal;color:black;")
+                 oxy_textfield(columns, 10, edit, "@notAfter-custom")
+            ;
+
+}
+place{
+content: oxy_label(text, "Assoziierte Orte", width, 20%, styles,
+      "font-weight:bold;color:black;");
+}
+placeName:before{
+    content:oxy_label(text, "Ortsname:", width, 20%);
+}
+
+bibl{
+    content:oxy_label(text, "Beziehungen (nur intern):", width, 20%, styles,
+      "font-weight:bold;color:black;");
+}
+bibl:not([type=links]){
+    content: oxy_textArea(
+          edit, '#content',
+          contentType, 'text/xml',
+          rows, 10,
+          columns, 60
 )
- oxy_checkbox(
-        edit, '@key',
-        values, 'FR',
-        uncheckedValues, 'Off',
-        labels, 'FR'
+
+}
+
+
+
+bibl[type=links]{
+    counter-reset:links;
+}
+
+bibl[type=links] > ref
+{
+    counter-increment:links;
+    content: counter(links)". Link | "
+             oxy_label(text, "Beschreibung:", width, 15%)
+             oxy_textfield(columns, 25, edit, "#text")
+             oxy_label(text, "URL:", width, 5%)
+             oxy_textfield(columns, 25, edit, "@target")
+             ;
+}
+body{
+content: oxy_label(text, "Inhalt (body)", width, 20%, styles,
+      "font-weight:bold;color:black;")
+      oxy_combobox( 
+            edit, '@type',
+            editable, false,
+            values, 'created, proofread, published',
+            labels, 'erstellt, korrekturgelesen, freigeschaltet'
 )
- oxy_checkbox(
-        edit, '@key',
-        values, 'GB',
-        uncheckedValues, 'Off',
-        labels, 'GB'
-)
- oxy_checkbox(
-        edit, '@key',
-        values, 'I',
-        uncheckedValues, 'Off',
-        labels, 'I'
-)
- oxy_checkbox(
-        edit, '@key',
-        values, 'CZ',
-        uncheckedValues, 'Off',
-        labels, 'CZ'
-);
+
+      }
+      
+body > div > p:before{
+    content: oxy_label(text, "Kurze Beschreibung zur Institution (Text):", width, 10%)
 }
-date:before{
-display: inline-block;
-  padding: 0px 10px 0px 0px;
-	content: 'Datum ('attr(type)'): ';
-	font-weight: bold;
-}
-date:focus {
-  border: 3px solid #555;
-}
-date[when]{
-    content: 'when: ' attr(when);
-}
-date[notBefore]{
-    content: 'notBefore: ' attr(notBefore) ' | notAfter: 'attr(notAfter);
-}
-date[notAfter]{
-    content: 'notBefore: ' attr(notBefore) ' | notAfter: 'attr(notAfter);
-}
-founder:before{
-display: inline-block;
-  padding: 0px 10px 0px 0px;
-	content: "Gründer: ";
-	font-weight: bold;
-}
-founder:focus {
-  border: 3px solid #555;
-}
-idno[type=gnd]:before{
-display: inline-block;
-  padding: 0px 10px 0px 0px;
-	content: "GND: ";
-	font-weight: bold;
-}
-idno[type=gnd]:focus {
-  border: 3px solid #555;
-}
-idno[type=viaf]:before{
-display: inline-block;
-  padding: 0px 10px 0px 0px;
-	content: "VIAF: ";
-	font-weight: bold;
-}
-idno[type=viaf]:focus {
-  border: 3px solid #555;
-}
-note:before{
-display: inline-block;
-  padding: 0px 10px 0px 0px;
-	content: "Anmerkung: ";
-	font-weight: bold;
-}
-note:focus {
-  border: 3px solid #555;
+body > div > p{
+    content:oxy_textArea(
+      edit, '#text',
+      contentType, 'text/xml',
+      rows, 10,
+      columns, 60);
 }
