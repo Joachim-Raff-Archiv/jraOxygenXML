@@ -1,0 +1,163 @@
+place {
+  border-radius: 5px;
+  background-color: #ffd9ac;
+  padding: 30px;
+}
+place:before{
+  display: block;
+    float: left;
+    margin-right: 10px;
+    padding: 10px;
+    width: 80%;
+    border: 1px solid #cccccc;
+    font-size: 18px;
+    font-weight: bold;
+    content: "ID: " attr(id) /*oxy_button(
+         action, oxy_action(
+            name, 'newID', 
+            description, 'generates a new ID', 
+            /\*icon, url('insert.png'),*\/ 
+            operation, 
+             '${id}'),
+         showIcon, true)*/;
+}
+placeName, geo, offset, settlement, region, country, idno[type=gnd], idno[type=viaf], note{
+    display: block;
+    float: left;
+    margin-right: 10px;
+    padding: 10px;
+    width: 70%;
+    border: 1px solid #cccccc;
+    font-size: 18px;
+}
+placeName:before{
+  display: inline-block;
+  padding: 0px 10px 0px 0px;
+  content: "Ortsname (nB:"attr(notBefore)" | nA:"attr(notAfter)" | "attr(type)"): ";
+  font-weight: bold;
+}
+placeName[type=street]:before{
+  display: inline-block;
+  padding: 0px 10px 0px 0px;
+  content: "Straße ("attr(type)"): ";
+  font-weight: bold;
+}
+num{
+    color: blue;
+}
+placeName:focus {
+  border: 3px solid #555;
+}
+location {
+  border: 2px solid blue; 
+}
+geo:before{
+display: inline-block;
+  padding: 0px 10px 0px 0px;
+	content: "Koordinaten: ";
+	font-weight: bold;
+}
+geo:focus {
+  border: 3px solid #555;
+}
+offset:before{
+display: inline-block;
+  padding: 0px 10px 0px 0px;
+	content: "Offset: ";
+	font-weight: bold;
+}
+offset:focus {
+  border: 3px solid #555;
+}
+
+settlement:before{
+display: inline-block;
+  padding: 0px 10px 0px 0px;
+	content: "Settlement ("attr(type)"): ";
+	font-weight: bold;
+}
+settlement:focus {
+  border: 3px solid #555;
+}
+region:before{
+display: inline-block;
+  padding: 0px 10px 0px 0px;
+	content: "Region: ";
+	font-weight: bold;
+}
+region:focus {
+  border: 3px solid #555;
+}
+country:before{
+display: inline-block;
+  padding: 0px 10px 0px 0px;
+	content: "Land: ";
+	font-weight: bold;
+}
+country:focus {
+  border: 3px solid #555;
+}
+country{
+    content:oxy_checkbox(
+        edit, '@key',
+        values, 'D',
+        uncheckedValues, 'Off',
+        labels, 'D'
+) oxy_checkbox(
+        edit, '@key',
+        values, 'CH',
+        uncheckedValues, 'Off',
+        labels, 'CH'
+)
+ oxy_checkbox(
+        edit, '@key',
+        values, 'FR',
+        uncheckedValues, 'Off',
+        labels, 'FR'
+)
+ oxy_checkbox(
+        edit, '@key',
+        values, 'GB',
+        uncheckedValues, 'Off',
+        labels, 'GB'
+)
+ oxy_checkbox(
+        edit, '@key',
+        values, 'I',
+        uncheckedValues, 'Off',
+        labels, 'I'
+)
+ oxy_checkbox(
+        edit, '@key',
+        values, 'CZ',
+        uncheckedValues, 'Off',
+        labels, 'CZ'
+);
+}
+idno[type=gnd]:before{
+display: inline-block;
+  padding: 0px 10px 0px 0px;
+	content: "GND: ";
+	font-weight: bold;
+}
+idno[type=gnd]:focus {
+  border: 3px solid #555;
+}
+idno[type=viaf]:before{
+display: inline-block;
+  padding: 0px 10px 0px 0px;
+	content: "VIAF: ";
+	font-weight: bold;
+}
+idno[type=viaf]:focus {
+  border: 3px solid #555;
+}
+note:before{
+display: inline-block;
+  padding: 0px 10px 0px 0px;
+	content: "Anmerkung: ";
+	font-weight: bold;
+}
+note:focus {
+  border: 3px solid #555;
+}

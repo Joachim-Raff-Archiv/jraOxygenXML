@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<person sex="male" xmlns="http://www.tei-c.org/ns/1.0" xml:id="personID">
+   <idno type="gnd">118597779</idno>
+   <idno type="viaf">18157038080566862515</idno>
+   <persName>
+      <forename sort="1" type="used">W.</forename>
+      <surname>Ensingers</surname>
+      <genName/>
+      <nameLink/>
+      <roleName/>
+      <addName/>
+   </persName>
+   <birth when="2010-12-12" notBefore="2020-11"/>
+   <death/>
+   <faith/>
+   <nationality key="en"/>
+   <education/>
+   <occupation/>
+   <affiliation key="baudi-05-0e61675c"/>
+</person>

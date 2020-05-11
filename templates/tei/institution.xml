@@ -1,0 +1,56 @@
+<TEI xmlns="http://www.tei-c.org/ns/1.0" xml:id="D00000">
+   <teiHeader>
+      <fileDesc>
+         <titleStmt>
+            <title>Dummy Institution</title>
+         </titleStmt>
+         <publicationStmt>
+            <publisher>Joachim-Raff-Archiv, Lachen/SZ, Switzerland</publisher>
+            <availability status="free">
+               <p><ref target="http://portal.raff-archiv.de">Joachim-Raff-Archiv Online</ref></p>
+            </availability>
+            <date from="2019-12-10" n="2019-001"/>
+         </publicationStmt>
+         <sourceDesc>
+            <listOrg>
+               <org>
+                  <orgName>Name der Institution</orgName>
+                  <desc>Art (Verlag, Verein)</desc>
+                  <idno type="GND" subtype="temp">GND-Nr.</idno>
+                  <idno type="VIAF">VIAF-Nr.</idno>
+                  <!--<event><head>Gründung</head><desc><date when="2018"/></desc></event>-->
+                  <place>
+                     <placeName>Ort</placeName>
+                  </place>
+                  <bibl>
+                     <listRelation>
+                        <relation name="letters">
+                           <desc>
+                              <list>
+                                 <item/>
+                              </list>
+                           </desc>
+                        </relation>
+                        <relation name="reference">
+                           <desc><list>
+                              <item>Referenzen</item>
+                           </list>
+                           </desc>
+                        </relation>
+                     </listRelation>
+                  </bibl>
+                  <bibl type="links"/>
+               </org>
+            </listOrg>
+         </sourceDesc>
+      </fileDesc>
+      
+   </teiHeader>
+   <text>
+      <body>
+         <div decls="abstract">
+            <p>Abstract/Basisinformationen zur Institution in Textform</p>
+         </div>
+      </body>
+   </text>
+</TEI>

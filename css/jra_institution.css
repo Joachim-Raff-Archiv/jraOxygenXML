@@ -1,0 +1,190 @@
+org {
+  border-radius: 5px;
+  background-color: #ffd9ac;
+  padding: 30px;
+}
+org:before{
+  display: block;
+    float: left;
+    margin-right: 10px;
+    padding: 10px;
+    width: 80%;
+    border: 1px solid #cccccc;
+    font-size: 18px;
+    font-weight: bold;
+    content: "ID: " attr(id) /*oxy_button(
+         action, oxy_action(
+            name, 'newID', 
+            description, 'generates a new ID', 
+            /\*icon, url('insert.png'),*\/ 
+            operation, 
+             '${id}'),
+         showIcon, true)*/;
+}
+placeName, orgName, function, associatePers, settlement, country, date, founder, idno[type=gnd], idno[type=viaf], note{
+    display: block;
+    float: left;
+    margin-right: 10px;
+    padding: 10px;
+    width: 70%;
+    border: 1px solid #cccccc;
+    font-size: 18px;
+}
+placeName:before{
+  display: inline-block;
+  padding: 0px 10px 0px 0px;
+  content: "Ortsname (nB:"attr(notBefore)" | nA:"attr(notAfter)" | "attr(type)"): ";
+  font-weight: bold;
+}
+placeName[type=street]:before{
+  display: inline-block;
+  padding: 0px 10px 0px 0px;
+  content: "Straße ("attr(type)"): ";
+  font-weight: bold;
+}
+num{
+    color: blue;
+}
+placeName:focus {
+  border: 3px solid #555;
+}
+location {
+  border: 2px solid blue; 
+}
+orgName:before{
+display: inline-block;
+  padding: 0px 10px 0px 0px;
+	content: "Name: ";
+	font-weight: bold;
+}
+orgName:focus {
+  border: 3px solid #555;
+}
+function:before{
+display: inline-block;
+  padding: 0px 10px 0px 0px;
+	content: "Zweck/Aufgabe: ";
+	font-weight: bold;
+}
+function:focus {
+  border: 3px solid #555;
+}
+
+settlement:before{
+display: inline-block;
+  padding: 0px 10px 0px 0px;
+	content: "Settlement (from" attr(from) " to " attr(to)"): ";
+	font-weight: bold;
+}
+settlement:focus {
+  border: 3px solid #555;
+}
+associatePers:before{
+display: inline-block;
+  padding: 0px 10px 0px 0px;
+	content: "Assoziierte Pers: ";
+	font-weight: bold;
+}
+associatePers:focus {
+  border: 3px solid #555;
+}
+country:before{
+display: inline-block;
+  padding: 0px 10px 0px 0px;
+	content: "Land: ";
+	font-weight: bold;
+}
+country:focus {
+  border: 3px solid #555;
+}
+country{
+    content:oxy_checkbox(
+        edit, '@key',
+        values, 'D',
+        uncheckedValues, 'Off',
+        labels, 'D'
+) oxy_checkbox(
+        edit, '@key',
+        values, 'CH',
+        uncheckedValues, 'Off',
+        labels, 'CH'
+)
+ oxy_checkbox(
+        edit, '@key',
+        values, 'FR',
+        uncheckedValues, 'Off',
+        labels, 'FR'
+)
+ oxy_checkbox(
+        edit, '@key',
+        values, 'GB',
+        uncheckedValues, 'Off',
+        labels, 'GB'
+)
+ oxy_checkbox(
+        edit, '@key',
+        values, 'I',
+        uncheckedValues, 'Off',
+        labels, 'I'
+)
+ oxy_checkbox(
+        edit, '@key',
+        values, 'CZ',
+        uncheckedValues, 'Off',
+        labels, 'CZ'
+);
+}
+date:before{
+display: inline-block;
+  padding: 0px 10px 0px 0px;
+	content: 'Datum ('attr(type)'): ';
+	font-weight: bold;
+}
+date:focus {
+  border: 3px solid #555;
+}
+date[when]{
+    content: 'when: ' attr(when);
+}
+date[notBefore]{
+    content: 'notBefore: ' attr(notBefore) ' | notAfter: 'attr(notAfter);
+}
+date[notAfter]{
+    content: 'notBefore: ' attr(notBefore) ' | notAfter: 'attr(notAfter);
+}
+founder:before{
+display: inline-block;
+  padding: 0px 10px 0px 0px;
+	content: "Gründer: ";
+	font-weight: bold;
+}
+founder:focus {
+  border: 3px solid #555;
+}
+idno[type=gnd]:before{
+display: inline-block;
+  padding: 0px 10px 0px 0px;
+	content: "GND: ";
+	font-weight: bold;
+}
+idno[type=gnd]:focus {
+  border: 3px solid #555;
+}
+idno[type=viaf]:before{
+display: inline-block;
+  padding: 0px 10px 0px 0px;
+	content: "VIAF: ";
+	font-weight: bold;
+}
+idno[type=viaf]:focus {
+  border: 3px solid #555;
+}
+note:before{
+display: inline-block;
+  padding: 0px 10px 0px 0px;
+	content: "Anmerkung: ";
+	font-weight: bold;
+}
+note:focus {
+  border: 3px solid #555;
+}

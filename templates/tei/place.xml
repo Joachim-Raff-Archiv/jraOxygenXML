@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<place xmlns="http://www.tei-c.org/ns/1.0" xml:id="placeID">
+   <placeName when="1900-11">Ortsname heute</placeName>
+   <placeName from="1900" to="1910">Ortsname von 1900–1910</placeName>
+   <geogName/>
+   <settlement/>
+   <region/>
+   <country key="de"/>
+   <note/>
+   <idno type="gnd"/>
+   <idno type="viaf"/>
+</place>

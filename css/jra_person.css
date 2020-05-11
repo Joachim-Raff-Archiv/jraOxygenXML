@@ -1,0 +1,425 @@
+TEI {
+  border-radius: 5px;
+  background-color: #ffd9ac;
+  padding: 30px;
+  width: 95%;
+}
+teiHeader:before{
+  display: block;
+    float: left;
+    margin-right: 10px;
+    padding: 10px;
+    width: 20%;
+    border: 1px solid #cccccc;
+    font-size: 18px;
+    font-weight: bold;
+    content: "ID: " oxy_xpath('parent::TEI/@xml:id');
+}
+title:before{
+    display: inline-block;
+  padding: 0px 10px 0px 0px;
+  content: "Dokument-Titel: ";
+  font-weight: bold;
+}
+publicationStmt:before{
+    display: inline-block;
+  padding: 0px 10px 0px 0px;
+  content: "Publikationshinweis: ";
+  font-weight: bold;
+}
+
+title, publicationStmt, forename, surname, nameLink, genName, roleName, addName, name, affiliation, birth, death, faith, education, sex, nationality, occupation, idno[type=gnd], idno[type=viaf], note, idno, residence, div[decls=abstract], facsimile, graphic, desc, bibl[type=links], relation{
+    display: block;
+    padding: 7px 7px 7px 7px;
+    float: left;
+    margin-right: 10px;
+    width: 95%;
+    border: 1px solid #cccccc;
+    font-size: 18px;
+}
+forename:before{
+  display: block;
+  padding: 0px 10px 0px 0px;
+  content: "Vorname:" oxy_checkbox(
+        edit, '@type',
+        values, 'used',
+        uncheckedValues, 'Off',
+        labels, 'Benutzt')
+        oxy_checkbox(
+        edit, '@type',
+        values, 'altWriting',
+        uncheckedValues, 'Off',
+        labels, 'AltSchreibw.')
+        oxy_checkbox(
+        edit, '@type',
+        values, 'pseudonym',
+        uncheckedValues, 'Off',
+        labels, 'Pseudonym');
+  font-weight: bold;
+}
+
+forename:focus {
+  border: 3px solid #555;
+}
+surname:before{
+display: block;
+  padding: 0px 10px 0px 0px;
+	content: "Nachname" oxy_checkbox(
+        edit, '@type',
+        values, 'used',
+        uncheckedValues, 'Off',
+        labels, 'Benutzt')
+        oxy_checkbox(
+        edit, '@type',
+        values, 'altWriting',
+        uncheckedValues, 'Off',
+        labels, 'AltSchreibw.')
+        oxy_checkbox(
+        edit, '@type',
+        values, 'birth',
+        uncheckedValues, 'Off',
+        labels, 'Geb.name')
+        oxy_checkbox(
+        edit, '@type',
+        values, 'married',
+        uncheckedValues, 'Off',
+        labels, 'Verh.')
+        oxy_checkbox(
+        edit, '@type',
+        values, 'pseudonym',
+        uncheckedValues, 'Off',
+        labels, 'Pseudonym');
+	font-weight: bold;
+}
+surname:focus {
+  border: 3px solid #555;
+}
+genName:before{
+display: inline-block;
+  padding: 0px 10px 0px 0px;
+	content: "Generation (Sen./Jun.): ";
+	font-weight: bold;
+}
+genName:focus {
+  border: 3px solid #555;
+}
+nameLink:before{
+display: inline-block;
+  padding: 0px 10px 0px 0px;
+	content: "Adelstitel: ";
+	font-weight: bold;
+}
+nameLink:focus {
+  border: 3px solid #555;
+}
+roleName:before{
+display: inline-block;
+  padding: 0px 10px 0px 0px;
+	content: "Rolle: ";
+	font-weight: bold;
+}
+roleName:focus {
+  border: 3px solid #555;
+}
+addName:before{
+display: block;
+  padding: 0px 10px 0px 0px;
+	content: "Namenszusatz "oxy_checkbox(
+        edit, '@type',
+        values, 'nick',
+        uncheckedValues, 'Off',
+        labels, 'Spitzname')
+        oxy_checkbox(
+        edit, '@type',
+        values, 'epithet',
+        uncheckedValues, 'Off',
+        labels, 'Beiname');
+	font-weight: bold;
+}
+addName:focus {
+  border: 3px solid #555;
+}
+persName > name:before{
+display: block;
+  padding: 0px 10px 0px 0px;
+	content: "Sonstiger Name (type: "attr(type)"):";
+	font-weight: bold;
+}
+name:focus {
+  border: 3px solid #555;
+}
+affiliation:before{
+display: block;
+  padding: 0px 10px 0px 0px;
+	content: "Affiliation (key: " attr(key) "):";
+	font-weight: bold;
+}
+affiliation:focus {
+  border: 3px solid #555;
+}
+birth:before{
+display: block;
+  padding: 0px 10px 0px 0px;
+	content: 'Lebensdaten (Beginn: 'attr(when-iso)'): ';
+	font-weight: bold;
+}
+birth:focus {
+  border: 3px solid #555;
+}
+birth{
+display: block;
+}
+birth > name:before{
+display: inline-block;
+  padding: 0px 10px 0px 0px;
+	content: "Geburtsort (type: "attr(type)"):";
+	font-weight: bold;
+}
+birth > date:before{
+display: inline-block;
+  padding: 0px 10px 0px 0px;
+	content: 'Geburt:';
+	font-weight: bold;
+}
+death:before{
+display: block;
+  padding: 0px 10px 0px 0px;
+	content: "Lebensdaten (Ende): ";
+	font-weight: bold;
+}
+death:focus {
+  border: 3px solid #555;
+}
+death{
+    display: block;
+}
+death > name:before{
+display: inline-block;
+  padding: 0px 10px 0px 0px;
+	content: "Geburtsort (type: "attr(type)"):";
+	font-weight: bold;
+}
+death > date:before{
+display: inline-block;
+  padding: 0px 10px 0px 0px;
+	content: 'Geburt:';
+	font-weight: bold;
+}
+faith:before{
+display: inline-block;
+  padding: 0px 10px 0px 0px;
+	content: "Religion: ";
+	font-weight: bold;
+}
+faith:focus {
+  border: 3px solid #555;
+}
+faith{
+   content:oxy_checkbox(
+        edit, '@key',
+        values, 'ev',
+        uncheckedValues, 'Off',
+        labels, 'ev'
+) oxy_checkbox(
+        edit, '@key',
+        values, 'rk',
+        uncheckedValues, 'Off',
+        labels, 'rk'
+)
+ oxy_checkbox(
+        edit, '@key',
+        values, 'unknown',
+        uncheckedValues, 'Off',
+        labels, '?'
+) oxy_checkbox(
+        edit, '@key',
+        values, 'none',
+        uncheckedValues, 'Off',
+        labels, 'none'
+)
+;
+}
+education:before{
+display: inline-block;
+  padding: 0px 10px 0px 0px;
+	content: "Ausbildung: ";
+	font-weight: bold;
+}
+education:focus {
+  border: 3px solid #555;
+}
+sex:before{
+display: inline-block;
+  padding: 0px 10px 0px 0px;
+	content: "Geschlecht: ";
+	font-weight: bold;
+}
+sex:focus {
+  border: 3px solid #555;
+}
+sex{
+   content:oxy_checkbox(
+        edit, '@type',
+        values, 'male',
+        uncheckedValues, 'Off',
+        labels, 'm'
+) oxy_checkbox(
+        edit, '@type',
+        values, 'female',
+        uncheckedValues, 'Off',
+        labels, 'w'
+)
+ oxy_checkbox(
+        edit, '@type',
+        values, 'unknown',
+        uncheckedValues, 'Off',
+        labels, '?'
+);
+}
+
+nationality:before{
+display: inline-block;
+  padding: 0px 10px 0px 0px;
+	content: "Staatsangehörigkeit: ";
+	font-weight: bold;
+}
+nationality:focus {
+  border: 3px solid #555;
+}
+nationality{
+    content:oxy_checkbox(
+        edit, '@key',
+        values, 'de',
+        uncheckedValues, 'Off',
+        labels, 'de'
+) oxy_checkbox(
+        edit, '@key',
+        values, 'fr',
+        uncheckedValues, 'Off',
+        labels, 'fr'
+)
+ oxy_checkbox(
+        edit, '@key',
+        values, 'ch',
+        uncheckedValues, 'Off',
+        labels, 'ch'
+)
+ oxy_checkbox(
+        edit, '@key',
+        values, 'en',
+        uncheckedValues, 'Off',
+        labels, 'en'
+)
+ oxy_checkbox(
+        edit, '@key',
+        values, 'it',
+        uncheckedValues, 'Off',
+        labels, 'it'
+)
+ oxy_checkbox(
+        edit, '@key',
+        values, 'cz',
+        uncheckedValues, 'Off',
+        labels, 'cz'
+);
+}
+
+occupation:before{
+display: inline-block;
+  padding: 0px 10px 0px 0px;
+	content: "Beruf: ";
+	font-weight: bold;
+}
+occupation:focus {
+  border: 3px solid #555;
+}
+idno:before{
+display: inline-block;
+  padding: 0px 10px 0px 0px;
+	content: "ID: " oxy_checkbox(
+        edit, '@type',
+        values, 'GND',
+        uncheckedValues, 'Off',
+        labels, 'GND'
+)
+ oxy_checkbox(
+        edit, '@type',
+        values, 'VIAF',
+        uncheckedValues, 'Off',
+        labels, 'VIAF'
+);
+	font-weight: bold;
+}
+idno:focus {
+  border: 3px solid #555;
+}
+
+note:before{
+display: inline-block;
+  padding: 0px 10px 0px 0px;
+	content: "Anmerkung: ";
+	font-weight: bold;
+}
+note:focus {
+  border: 3px solid #555;
+}
+
+residence:before{
+    display: inline-block;
+  padding: 0px 10px 0px 0px;
+	content: "Wirkungsort: ";
+	font-weight: bold;
+}
+
+div[decls=abstract]:before{
+    display: block;
+  padding: 0px 10px 0px 0px;
+	content: "Abstract: ";
+	font-weight: bold;
+}
+
+facsimile:before{
+    display: inline-block;
+  padding: 0px 10px 0px 0px;
+	content: "Faksimile:";
+	font-weight: bold;
+}
+
+facsimile > graphic:before{
+    display: inline-block;
+    padding: 0px 10px 0px 0px;
+	content: "URL: " attr(url) "\A Quelle: " attr(resp);
+}
+facsimile > desc:before{
+    display: inline-block;
+    padding: 0px 10px 0px 0px;
+	content: "Beschr. d. Faks.: ";
+	font-weight: bold;
+}
+bibl[type=links]:before{
+display: inline-block;
+  padding: 0px 10px 0px 0px;
+	content: "Literatur-Link: ";
+	font-weight: bold;
+}
+bibl[type=links]:focus {
+  border: 3px solid #555;
+}
+relation[name=letters]:before{
+    display: inline-block;
+  padding: 0px 10px 0px 0px;
+	content: "Brieferwähnungen: ";
+	font-weight: bold;
+}
+relation[name=letters]:focus {
+  border: 3px solid #555;
+}
+relation[name=reference]:before{
+    display: inline-block;
+  padding: 0px 10px 0px 0px;
+	content: "Raff-Bezug: ";
+	font-weight: bold;
+}
+relation[name=reference]:focus {
+  border: 3px solid #555;
+}

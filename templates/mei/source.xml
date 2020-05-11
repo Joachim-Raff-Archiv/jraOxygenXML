@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mei xmlns="http://www.music-encoding.org/ns/mei" xmlns:xlink="http://www.w3.org/1999/xlink"
+    meiversion="4.0.0" xml:id="baudi-01-00000000">
+    <meiHead>
+        <fileDesc>
+            <titleStmt>
+                <title type="uniform" xml:lang="de"/>
+            </titleStmt>
+            <pubStmt/>
+        </fileDesc>
+        <workList>
+            <work>
+                <title type="uniform" xml:lang="de" xml:id="baudi-01-00000000-titleUniformDE">
+                    <titlePart type="main" xml:lang="de" xml:id="baudi-01-00000000-titleUniformMainDE"
+                        />
+                    <titlePart type="number" label="opus"/>
+                    <titlePart type="desc" xml:lang="de" xml:id="baudi-01-00000000-titleUniformDescDE"
+                        />
+                </title>
+                <key pname="c" mode="major"/>
+                <meter count="4" unit="4" sym="common"/>
+                <tempo/>
+                <incip/>
+                <perfMedium>
+                    <perfResList>
+                        <perfRes/>
+                    </perfResList>
+                </perfMedium>
+            </work>
+        </workList>
+        <manifestationList>
+            <manifestation class="#pr">
+                <identifier type="rism"/>
+                <identifier type="D-KA"/>
+                <titleStmt>
+                    <title xml:id="baudi-01-00000000-title">
+                        <titlePart type="main" xml:id="baudi-01-00000000-titleMain"></titlePart>
+                        <titlePart type="subordinate" xml:id="baudi-01-00000000-titleSub"/>
+                        <titlePart type="desc" xml:id="baudi-01-00000000-titleDesc"/>
+                    </title>
+                    <composer xml:id="baudi-01-00000000-composer">
+                        <persName auth="baudi-04-5e3ed698">Ludwig Baumann</persName>
+                    </composer>
+                </titleStmt>
+                <physDesc>
+                    <titlePage>
+                        <p decls="titlePage">
+                            <rend halign="center">Inhalt</rend></p>
+                    </titlePage>
+                    <dimensions label="height" unit="mm"></dimensions>
+                    <dimensions label="width" unit="mm"></dimensions>
+                    <extent label="orientation"></extent>
+                    <extent label="cover"></extent>
+                    <extent label="folium" unit="folium"></extent>
+                    <extent label="pages" unit="page"></extent>
+                    <extent label="pagination">none</extent>
+                    <scoreFormat></scoreFormat>
+                    <watermark label="watermark"/>
+                    <plateNum/>
+                    <handList>
+                        <hand/>
+                    </handList>
+                    <addDesc>
+                        <!--<p type="copyright">Copyright <date type="copyright">1908</date> by <corpName auth="">C.F.W. Siegel's
+                            Musikalienhandlung (R. Linnemann)</corpName>, Leipzig.</p>-->
+                    </addDesc>
+                    <condition n="1" resp="dried" type="desc">
+                        <date isodate="2019-08-21" type="desc" resp="dried"/>
+                        <!-- <p decls="statusReport">Zustandsbeschreibung</p> -->
+                    </condition>
+                    <physMedium xml:id="baudi-01-00000000-physMedium"><!-- Lagenordnung -->
+                        <stamp>
+                            <locus n="2r" type="stamps">
+                                <symbol class=""/>
+                                <rend valign="" halign=""/>
+                            </locus>
+                        </stamp></physMedium>
+                </physDesc>
+                <physLoc>
+                    <repository>
+                        <corpName label="D-KA">Badische Landesbibliothek Karlsruhe</corpName>
+                        <identifier type="shelfmark"/>
+                    </repository>
+                </physLoc>
+                <history></history>
+                <langUsage>
+                    <language auth="de"/>
+                </langUsage>
+                <contents/>
+                <biblList/>
+                <notesStmt>
+                    <!-- Weitere Anmerkungen des Beschreibers -->
+                    <annot n="1" when="2019-08-21" resp="dried">notCleaned</annot>
+                    <annot type="ambitus" corresp="baudi-09-f0a0dd20"><note type="start"/>–<note
+                        type="end"/></annot>
+                </notesStmt>
+                <classification>
+                    <termList>
+                        <term type="workGroup" subtype="choir"/>
+                        <term type="genre" subtype="choir"/>
+                    </termList>
+                </classification>
+                <componentList>
+                    <head>Beschreibung einzelner Stimmen oder untergeordneten Quellen.</head>
+                    <manifestation class="#text">
+                        <identifier>s.o.</identifier>
+                        <physDesc>
+                            <extent n="2">1 Blatt</extent>
+                            <addDesc> Enthält den Chor-Text </addDesc>
+                        </physDesc>
+                    </manifestation>
+                </componentList>
+                <relationList/>
+            </manifestation>
+        </manifestationList>
+        <extMeta xmlns:tei="http://www.tei-c.org/ns/1.0">
+        </extMeta>
+    </meiHead>
+    <music>
+        <facsimile/>
+        <body>
+            <mdiv>
+                <score>
+                    <scoreDef/>
+                    <section/>
+                    <div>
+                        <lg>
+                            <l/>
+                        </lg>
+                    </div>
+                </score>
+            </mdiv>
+        </body>
+    </music>
+</mei>
