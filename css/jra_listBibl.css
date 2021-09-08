@@ -1,0 +1,30 @@
+listBibl:before {
+    display: block;
+    content: 'Bibliographie: ';
+    counter-reset: bibl;
+}
+
+listBibl {
+    display: block;
+}
+
+listBibl:after {
+    content: oxy_button( actionID, 'add', showIcon, true);
+    }
+
+bibl:before {
+    counter-increment: bibl;
+    content: 'Literaturangabe ' counter(bibl) ': '
+}
+
+bibl {
+    display: block;
+    content: oxy_textfield(edit, '#text', width, 75%);
+}
+
+bibl:after {
+    content: oxy_button(
+         actionID, 'delete',
+         showIcon, true
+);
+}

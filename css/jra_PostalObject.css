@@ -1,0 +1,719 @@
+/* CSS for styling XML of database entries (MRI_PostalObjects) */
+
+TEI:before {
+    font-size: 1.5em;
+	content: "JRA-Datensatz (Postsache)";
+	padding-bottom: 0.5em;
+	border-bottom: 2px solid gray;
+	width: 500px;
+}
+
+TEI {
+	padding: 1.5em;;
+	width: 90%;
+	background-color: #F8F8FF;
+	border-bottom: 7px double slategray;
+	visibility: -oxy-collapse-text;
+	content: "\A ID: " oxy_xpath("root()/node()/string(@xml:id)") '\A'
+	/*"Status: " oxy_xpath("root()/node()/string(@status)") '\A'*/;
+}
+
+persName, forename, surname, nameLink, roleName, genName, addName, orgName, birth, death, faith, education, sex, nationality, occupation, idno[type=gnd], listPerson, idno[type=shelfmark], idno[type=viaf], note, region, date, geogName, address, event, desc, category, name, text{
+display: block;
+padding: 10px 10px 10px 10px;
+visibility: -oxy-collapse-text;
+}
+
+street, postCode, settlement, country, district, region, repository, decoNote {
+display: block;
+padding: 10px 0px 0px 10px;
+visibility: -oxy-collapse-text;
+}
+
+ surname, roleName, addName, genName, faith, education, sex, nationality, idno[type=gnd], idno[type=shelfmark], idno[type=viaf], region, settlement, geogName, address, street, postCode, name, district, country, repository {
+content: oxy_textfield(columns, 20, edit, "#text", "true");
+}
+
+num{
+content: oxy_textfield(columns, 5, edit, "#text", "true");
+}
+
+decoNote {
+    content: oxy_textArea(
+          edit, '#content',
+          contentType, 'text',
+          rows, 5,
+          columns, 60
+)
+
+}
+
+listPerson:before {
+    content: 'Affiliierte Person(en):\A'
+             oxy_button(action, oxy_action(
+                name, '+ person', 
+                description, 'Insert another person', 
+                icon, url('insert.png'), 
+                operation, 'InsertFragmentOperation', 
+                arg-fragment, '<person key="0" xmlns="http://www.tei-c.org/ns/1.0"/>'));
+}
+
+listPerson > person[key] {
+    display: block;
+    content: oxy_combobox( 
+            edit, '@key',
+            editable, false,
+            width, 300px,
+            values, oxy_xpath("string-join(('0', doc('../../../../jraOxygenXML/temp/jraPersonsIndex.xml')//tei:entry/@key/string()),', ')"),
+            labels, oxy_xpath("string-join(('Bitte Wählen', doc('../../../../jraOxygenXML/temp/jraPersonsIndex.xml')//tei:entry/@name/string()),', ')")
+            )
+            ' ' oxy_label(text, "(falls abweichend)", width, 10em, inherit)
+             oxy_textfield(edit, '#text', columns, 30);
+}
+
+/* handling of identifiers (IDs) */
+idno[type='gnd']:before {
+    font-family: sans-serif;
+    font-style: normal;
+    content: "GND-ID: "
+}
+idno[type='gnd']:after {
+    font-family: sans-serif;
+    font-style: normal;
+    -oxy-link: oxy_concat("http://d-nb.info/gnd/", oxy_xpath('./text()'));
+    content: oxy_url('../icons/link16.jpg');
+}
+
+idno[type='viaf']:before {
+    font-family: sans-serif;
+    font-style: normal;
+    content: "VIAF-ID: "
+}
+
+idno[type='viaf']:after {
+    font-family: sans-serif;
+    font-style: normal;
+    -oxy-link: oxy_concat("http://viaf.org/viaf/", oxy_xpath('./text()'));
+    content: oxy_url('../icons/link16.jpg');
+}
+
+idno[type=shelfmark]:before {
+    font-family: sans-serif;
+    font-style: normal;
+    content: oxy_label(text, "Signatur", width, 7em, color, inherit)
+;
+    
+}
+
+persName[type='fm']:before {
+    display:inline-block;
+    content: 'Name (FM): ';
+    font-size: smaller;
+    color: black;
+}
+persName[type='full']:before {
+ content: oxy_label(text, "Name der Person", width, 30px, styles,
+      "color:black;");
+      border-bottom: 1px solid slategray;
+}
+
+persName[type='pseud']:before {
+ content: oxy_label(text, "Name der Person", width, 30px, styles,
+      "color:black;");
+      border-bottom: 1px solid slategray;
+}
+
+persName[type='fm'] {
+    display: block;
+    content: oxy_xpath("//persName[@type='fm']/text()");
+    font-size: smaller;
+    font-style: italic;
+    color: slategray;
+}
+
+persName:before{
+    display: inline-block;
+	content: oxy_label(text, "Name der Person", width, 30px, styles,
+      "color:black;")
+      '  '
+      oxy_combobox( 
+            edit, '@key',
+            editable, false,
+            width, 300px,
+            values, oxy_xpath("string-join(('0', doc('../../../../jraOxygenXML/temp/jraPersonsIndex.xml')//tei:entry/@key/string()),', ')"),
+            labels, oxy_xpath("string-join(('Bitte Wählen', doc('../../../../jraOxygenXML/temp/jraPersonsIndex.xml')//tei:entry/@name/normalize-space(string())),', ')")
+            )
+            ' ' oxy_label(text, "(falls abweichend)", width, 10em, inherit)
+             oxy_textfield(edit, '#text', columns, 30);
+}
+
+
+orgName:before {
+    display: inline-block;
+    content: oxy_label(text, "Name der Institution", width, 30px, styles,
+             "color:black;")
+             '  '
+             oxy_combobox( 
+                  edit, '@key',
+                  editable, false,
+                  width, 300px,
+                  values, oxy_xpath("string-join(('0', doc('../../../../jraOxygenXML/temp/jraInstitutionsIndex.xml')//tei:entry/@key/string()),', ')"),
+                  labels, oxy_xpath("string-join(('Bitte Wählen', doc('../../../../jraOxygenXML/temp/jraInstitutionsIndex.xml')//tei:entry/@name/normalize-space(string())),', ')")
+                  )
+                  ' ' oxy_label(text, "(falls abweichend)", width, 10em, inherit)
+                   oxy_textfield(edit, '#text', columns, 30);
+}
+
+
+/* Space after block */
+birth, death, sex, occupation,  marriedpartner {
+    display: block;
+    margin-bottom: 0.5em;
+}
+
+/* Fancy Headding before block */
+birth:before, death:before, persName[type='full']:before {
+    font-size: 1.25em;
+    margin-bottom: 1em;
+    display: block;
+    border-bottom: 1px solid silver;
+    }
+    
+
+
+birth:before{
+  
+	content: oxy_label(text, "Geburtsdaten", width, 30px, styles,
+      "color:black;");
+}
+birth, death{
+font-size: small;
+font-style:italic;
+    content: 'Daten bitte ausschließlich im ISO-Standard angeben: JJJJ-MM-TT \A' 'Ist eine Stelle des Datums nicht bekannt, bitte das Feld (custom) verwenden, z.B. 1916-00-16 \A'
+                'ISO-Std '
+                oxy_button(action, oxy_action(
+                name, '+ Wann', 
+                description, 'Insert a date in ISO-standard', 
+                icon, url('insert.png'), 
+                operation, 'InsertFragmentOperation', 
+                arg-fragment, '<date when="" xmlns="http://www.tei-c.org/ns/1.0"/>'))
+                oxy_button(action, oxy_action(
+                name, '+ nicht vor', 
+                description, 'Insert a date in ISO-standard', 
+                icon, url('insert.png'), 
+                operation, 'InsertFragmentOperation', 
+                arg-fragment, '<date notBefore="" xmlns="http://www.tei-c.org/ns/1.0"/>'))
+                oxy_button(action, oxy_action(
+                name, '+ nicht nach', 
+                description, 'Insert a date in ISO-standard', 
+                icon, url('insert.png'), 
+                operation, 'InsertFragmentOperation', 
+                arg-fragment, '<date notAfter="" xmlns="http://www.tei-c.org/ns/1.0"/>'))
+                '\A'
+                'custom '
+                oxy_button(action, oxy_action(
+                name, '+ Wann', 
+                description, 'Insert a custom date in non ISO-standard', 
+                icon, url('insert.png'), 
+                operation, 'InsertFragmentOperation', 
+                arg-fragment, '<date when-custom="0000-00-00" xmlns="http://www.tei-c.org/ns/1.0"/>'))
+                oxy_button(action, oxy_action(
+                name, '+ nicht vor', 
+                description, 'Insert a custom date in non ISO-standard', 
+                icon, url('insert.png'), 
+                operation, 'InsertFragmentOperation', 
+                arg-fragment, '<date notBefore-custom="0000-00-00" xmlns="http://www.tei-c.org/ns/1.0"/>'))
+                oxy_button(action, oxy_action(
+                name, '+ nicht nach', 
+                description, 'Insert a custom date in non ISO-standard', 
+                icon, url('insert.png'), 
+                operation, 'InsertFragmentOperation', 
+                arg-fragment, '<date notAfter-custom="0000-00-00" xmlns="http://www.tei-c.org/ns/1.0"/>'));
+}
+death:before{
+font-style: normal;
+	content: oxy_label(text, "Sterbedaten", width, 30px, styles,
+      "color:black;");
+}
+
+
+date[when]:before {
+font-style: normal;
+    content: 'Wann';
+}
+date[when] {
+    content: oxy_datePicker(
+            columns, 16, 
+            edit, "@when",
+            format, "yyyy-MM-dd");
+}
+
+
+date[when-custom]:before {
+font-style: normal;
+    content: 'Wann (custom)';
+}
+
+date[when-custom] {
+    content: oxy_textfield(
+            width, 16, 
+            edit, "@when-custom");
+}
+
+date[notBefore]:before {
+font-style: normal;
+    content: 'Nicht vor';
+}
+date[notBefore] {
+    content: oxy_datePicker(
+            columns, 16, 
+            edit, "@notBefore",
+            format, "yyyy-MM-dd");
+}
+
+date[notBefore-custom]:before {
+font-style: normal;
+    content: 'Nicht vor (custom)';
+}
+
+date[notBefore-custom] {
+    content: oxy_textfield(
+            width, 16, 
+            edit, "@notBefore-custom");
+}
+
+date[notAfter]:before {
+font-style: normal;
+    content: 'Nicht nach';
+}
+date[notAfter] {
+    content: oxy_datePicker(
+            columns, 16, 
+            edit, "@notAfter",
+            format, "yyyy-MM-dd");
+}
+
+date[notAfter-custom]:before {
+font-style: normal;
+    content: 'Nicht nach (custom)';
+}
+
+date[notAfter-custom] {
+    content: oxy_textfield(
+            width, 16, 
+            edit, "@notAfter-custom");
+}
+
+
+placeName{
+    display: block;
+padding: 10px 10px 10px 10px;
+visibility: -oxy-collapse-text;
+border: 1px solid black;
+content: oxy_label(text, "Ortsangaben", width, 10em, color, inherit) '\A'
+oxy_button(action, oxy_action(
+                name, '+ Adresse', 
+                description, 'Insert an address', 
+                icon, url('insert.png'), 
+                operation, 'InsertFragmentOperation', 
+                arg-fragment, '<address xmlns="http://www.tei-c.org/ns/1.0"><street><num/></street><postCode/><settlement/><district/><region/><country/></address>'));
+}
+
+address{
+    display: block;
+padding: 10px 10px 10px 10px;
+visibility: -oxy-collapse-text;
+border: 1px solid black;
+content: oxy_label(text, "Adresse", width, 10em, color, inherit);
+}
+
+street:before {
+    content: oxy_label(text, "Straße", width, 7em, color, inherit)
+}
+
+num:before {
+    content: oxy_label(text, "Haus-Nr.", width, 5em, color, inherit)
+}
+
+postCode:before {
+    content: oxy_label(text, "Postleitzahl", width, 7em, color, inherit)
+}
+region:before {
+    content: oxy_label(text, "Region", width, 7em, color, inherit)
+}
+district:before {
+    content: oxy_label(text, "Bezirk", width, 7em, color, inherit)
+}
+settlement:before{
+  font-style: normal;
+	content: oxy_label(text, "Ort", width, 7em, styles,
+      "color:black;");
+}
+
+institution:before{
+    content: oxy_label(text, "Bestandshaltende Institution", width, 10em, color, inherit) '\A'
+                /*oxy_action(
+                 name, '+ Person', 
+                 description, 'Insert another name for this institution', 
+                 operation, 'ro.sync.ecss.extensions.commons.operations.InsertFragmentOperation', 
+                 icon, url('insert.png'), 
+                 arg-fragment, '<persName key="0" xmlns="http://www.tei-c.org/ns/1.0"/>',
+                 arg-insertLocation, './node()',
+                 arg-insertPosition, 'After') ' '*/
+                oxy_action(
+                 name, '+ Institution', 
+                 description, 'Insert another name for this institution', 
+                 operation, 'ro.sync.ecss.extensions.commons.operations.InsertFragmentOperation', 
+                 icon, url('insert.png'), 
+                 arg-fragment, '<orgName key="0" xmlns="http://www.tei-c.org/ns/1.0"/>',
+                 arg-insertLocation, '.',
+                 arg-insertPosition, 'Inside as last child');
+}
+
+repository:before{
+  font-style: normal;
+	content: oxy_label(text, "Verwahrungsort", width, 7em, styles,
+      "color:black;");
+}
+
+decoNote:not([type="letterhead"]):before{
+  font-style: normal;
+	content: oxy_label(text, "decoNote", width, 7em, styles,
+      "color:black;");
+}
+
+decoNote[type="letterhead"]:before{
+  font-style: normal;
+	content: oxy_label(text, "Briefkopf", width, 7em, styles,
+      "color:black;");
+}
+
+country:before {
+    content: oxy_label(text, "Land", width, 7em, color, inherit)
+             oxy_combobox( 
+                edit, '@key',
+                editable, false,
+                values, '0, DE, CH, A, GB',
+                labels, 'Bitte wählen, Deutschland, Schweiz, Österreich, Großbritannien'
+             )
+}
+
+
+faith:before{
+  
+	content: oxy_label(text, "Konfession", width, 30px, styles,
+      "color:black;");
+}
+faith{
+   color:black;
+   content: oxy_combobox(
+            edit, "@key", 
+            editable, false,
+            values, " , protestant, katholic, presbyterian, lutherian, none",
+            labels, " , Protestant(in), Katholik(in), Presbyterianer(in), Lutheraner(in), keine")
+;
+}
+education:before{
+	content: oxy_label(text, "Ausbildung", width, 30px, styles,
+      "color:black;");
+}
+sex:before{
+	content: oxy_label(text, "Geschlecht", width, 30px, styles,
+      "color:black;");
+}
+sex{
+   content: oxy_combobox(
+            edit, "#text", 
+            editable, false,
+            values, "male, female, unknown",
+            labels, "männlich, weiblich, unbekannt");
+}
+nationality:before{
+	content: oxy_label(text, "Staatsangehörigkeit", width, 30px, styles,
+      "color:black;");
+}
+
+nationality{
+    content: oxy_combobox(
+            edit, "@key", 
+            editable, false,
+            values, oxy_xpath("string-join(doc('/Users/dried/Repositories/BauDi/dicts/countries.xml')//tei:taxonomy/tei:category/@xml:id,', ')"),
+            labels, oxy_xpath("string-join(doc('/Users/dried/Repositories/BauDi/dicts/countries.xml')//tei:taxonomy/tei:category//tei:name[@type='nationality'],', ')"));
+}
+
+occupation:first-of-type:before{
+    display: block;
+	content: oxy_action(
+          name, '+ Beruf', 
+          description, 'Insert an element after the current one', 
+          operation, 'ro.sync.ecss.extensions.commons.operations.InsertFragmentOperation', 
+          icon, url('insert.png'), 
+          arg-fragment, '<occupation xmlns="http://www.tei-c.org/ns/1.0"/>',
+          arg-insertLocation, '.',
+          arg-insertPosition, 'After'
+)
+'\A'
+oxy_label(text, "Beruf", width, 30px, styles,
+      "color:black;")
+             '  '
+             oxy_textfield(columns, 20, edit, "#text", "true");
+}
+
+occupation:not(:first-of-type):before {
+    display: block;
+    content: oxy_label(text, "Beruf", width, 30px, styles,
+      "color:black;")
+             '  '
+             oxy_textfield(columns, 20, edit, "#text", "true");
+}
+
+marriedpartner:before {content: oxy_textfield(edit, '#text', values, oxy_action(
+          name, 'Insert', 
+          description, 'Insert an element after the current one', 
+          operation, 'ro.sync.ecss.extensions.commons.operations.InsertFragmentOperation', 
+          icon, url('insert.png'), 
+          arg-fragment, '<element></element>',
+          arg-insertLocation, '.',
+          arg-insertPosition, 'After'
+)
+);
+}
+
+/* Handling of manuscript Description */
+
+:not(surrogates) > msDesc {
+    display: block;
+padding: 10px 10px 10px 10px;
+visibility: -oxy-collapse-text;
+border: 1px solid black;
+content: oxy_label(text, "Quellenbeschreibung", width, 10em, color, inherit);
+margin-bottom: 2em;
+}
+
+msDesc[type="copyxero"]{
+    display: block;
+padding: 10px 10px 10px 10px;
+visibility: -oxy-collapse-text;
+border: 1px solid black;
+content: oxy_label(text, "Kopie", width, 10em, color, inherit);
+margin-bottom: 1em;
+}
+
+msDesc[type="copytranscriptpartial"]{
+    display: block;
+padding: 10px 10px 10px 10px;
+visibility: -oxy-collapse-text;
+border: 1px solid black;
+content: oxy_label(text, "Abschrift", width, 10em, color, inherit);
+margin-bottom: 1em;
+}
+
+measure {
+    display: block;
+    content: oxy_label(text, "Einheit", width, 7em, color, inherit)
+             oxy_combobox( 
+                edit, '@unit',
+                editable, false,
+                values, '0,page',
+                labels, 'Bitte wählen,Seite') '\A'
+             oxy_label(text, "Schreibart", width, 7em, color, inherit)
+             oxy_combobox( 
+                edit, '@type',
+                editable, false,
+                values, '0,written, typed',
+                labels, 'Bitte wählen,händisch, maschinell') '\A'
+             oxy_label(text, "Anzahl", width, 7em, color, inherit)
+             oxy_textfield(
+                edit, '@commodity',
+                columns, 5)
+}
+
+handNote {
+    display: block;
+    content: oxy_label(text, "Medium", width, 7em, color, inherit)
+             oxy_combobox( 
+                edit, '@medium',
+                editable, false,
+                values, '0,ink,pencil, pen',
+                labels, 'Bitte wählen,Tinte,Bleistift, Kugelschreiber') '\A'
+             oxy_label(text, "Farbe", width, 7em, color, inherit)
+             oxy_combobox( 
+                edit, '@rend',
+                editable, false,
+                values, '0,black,blue,red,green,other',
+                labels, 'Bitte wählen,schwarz,blau,rot,grün,andere')
+}
+/* Handling of profileDesc and correspAction */
+
+profileDesc {
+    display: block;
+padding: 10px 10px 10px 10px;
+visibility: -oxy-collapse-text;
+border: 1px solid black;
+content: oxy_label(text, "Korrespondenz-Partner", width, 10em, color, inherit);
+margin-bottom: 2em;
+}
+
+correspAction  {
+    display: block;
+padding: 10px 10px 10px 10px;
+visibility: -oxy-collapse-text;
+border: 1px dashed black;
+margin-bottom: 1em;
+margin-top: 1em;
+}
+
+correspAction[type="sent"]:before{
+    content: oxy_label(text, "Absender", width, 10em, color, inherit) '\A'
+             oxy_button(action, oxy_action(
+                name, '+ Adresse', 
+                description, 'Insert an address', 
+                icon, url('insert.png'), 
+                operation, 'InsertFragmentOperation', 
+                arg-fragment, '<address xmlns="http://www.tei-c.org/ns/1.0"><street><num/></street><postCode/><settlement/><district/><region/><country/></address>')) ' '
+                oxy_action(
+                 name, '+ Person', 
+                 description, 'Insert another name for this institution', 
+                 operation, 'ro.sync.ecss.extensions.commons.operations.InsertFragmentOperation', 
+                 icon, url('insert.png'), 
+                 arg-fragment, '<persName key="0" xmlns="http://www.tei-c.org/ns/1.0"/>',
+                 arg-insertLocation, './node()',
+                 arg-insertPosition, 'After') ' '
+                oxy_action(
+                 name, '+ Institution', 
+                 description, 'Insert another name for this institution', 
+                 operation, 'ro.sync.ecss.extensions.commons.operations.InsertFragmentOperation', 
+                 icon, url('insert.png'), 
+                 arg-fragment, '<orgName key="0" xmlns="http://www.tei-c.org/ns/1.0"/>',
+                 arg-insertLocation, './node()',
+                 arg-insertPosition, 'After');
+}
+
+correspAction[type="received"]:before {
+    content: oxy_label(text, "Empfänger", width, 10em, color, inherit) '\A'
+             oxy_button(action, oxy_action(
+                name, '+ Adresse', 
+                description, 'Insert an address', 
+                icon, url('insert.png'), 
+                operation, 'InsertFragmentOperation', 
+                arg-fragment, '<address xmlns="http://www.tei-c.org/ns/1.0"><street><num/></street><postCode/><settlement/><district/><region/><country/></address>')) ' '
+                oxy_action(
+                 name, '+ Person', 
+                 description, 'Insert another name for this institution', 
+                 operation, 'ro.sync.ecss.extensions.commons.operations.InsertFragmentOperation', 
+                 icon, url('insert.png'), 
+                 arg-fragment, '<persName key="0" xmlns="http://www.tei-c.org/ns/1.0"/>',
+                 arg-insertLocation, './node()',
+                 arg-insertPosition, 'After') ' '
+                oxy_action(
+                 name, '+ Institution', 
+                 description, 'Insert another name for this institution', 
+                 operation, 'ro.sync.ecss.extensions.commons.operations.InsertFragmentOperation', 
+                 icon, url('insert.png'), 
+                 arg-fragment, '<orgName key="0" xmlns="http://www.tei-c.org/ns/1.0"/>',
+                 arg-insertLocation, './node()',
+                 arg-insertPosition, 'After')
+}
+
+/* Handling of notes */
+
+note:not([type=fm]):not([type="workRefs"]) {
+white-space: pre-wrap;
+counter-increment: notes;
+content: oxy_textArea(
+          edit, '#text',
+          columns, 60,
+          rows, 5,
+          contentType, 'text/xml');
+}
+
+note[type=fm], note[type="workRefs"] {
+white-space: pre-wrap;
+counter-increment: notes;
+font-style: italic;
+content: oxy_xpath(".//text()");
+}
+
+note:not([type=fm]):not([type="workRefs"]):before {
+    white-space: pre-wrap;
+    content: 'Notiz ' counter(notes) ': '
+             oxy_combobox(
+            edit, "@type", 
+            editable, false,
+            values, ",bioSummary, dataPool",
+            labels, "Biite wählen, Zur Biographie, Datenpool");
+}
+
+note[type=fm]:before, note[type=workRefs]:before {
+    white-space: pre-wrap;
+    font-style: normal;
+    content: 'Notiz ' counter(notes)
+             oxy_concat(' [', attr(type), ', ', attr(subtype), ']: ');
+}
+
+langUsage {
+    display: block;
+    border: 1px solid black;
+    content: oxy_label(text, "Benutzte Sprache(n)", width, 10em, color, inherit)
+             oxy_button(action, oxy_action(
+                name, '+ Sprache', 
+                description, 'Insert another used language', 
+                icon, url('insert.png'), 
+                operation, 'InsertFragmentOperation',
+                arg-fragment, '<language ident="0" xmlns="http://www.tei-c.org/ns/1.0"/>'
+                arg-insertLocation, './node()',
+                arg-insertPosition, 'After'));
+    
+}
+
+language:before{
+    content: oxy_label(text, "Sprache", width, 10em, color, inherit);
+}
+
+language{
+    display:block;
+    content: oxy_combobox( 
+            edit, '@ident',
+            editable, false,
+            values, '0,de-DE',
+            labels, 'Bitte wählen, deutsch (de)'
+            );
+
+}
+
+/*  disable listBibl and noteStmt for general view */
+listBibl, bibl {
+    display: none;
+}
+
+notesStmt, note, note > date {
+    display:none;
+}
+
+/* disable fields, that shouldn't be changed */
+idno[type="MRI_Personalia"], occupation[subtype="fm"], fileDesc > titleStmt, fileDesc > publicationStmt, note[type=workRefs] > *, revisionDesc, history {
+    display: none;
+}
+
+note:not([type='fm']):not([type='workRefs']):after, listPerson > person:after, forename:after, surname:after, date:after, orgName:after, persName:after, genName:after, addName:after, name:after, roleName:after, nameLink:after, address:after, decoNote:after, language:not(:first-of-type):after {
+    content: oxy_button(action, oxy_action(
+                name, 'X', 
+                description, 'Delete this note', 
+                operation, 'ro.sync.ecss.extensions.commons.operations.DeleteElementOperation')
+              );
+}
+
+lb {
+    content: '\A';
+}
+
+/* Handling of transcriptions */
+
+text {
+    white-space: pre-wrap;
+    content: oxy_textArea(
+          edit, '#content',
+          columns, 60,
+          rows, 20,
+          contentType, 'text/xml');
+}

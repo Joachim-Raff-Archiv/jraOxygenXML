@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<serialized version="21.1" xml:space="preserve">
+<serialized xml:space="preserve">
 	<serializableOrderedMap>
 		<entry>
 			<String>document.types</String>
 			<documentTypeDescriptor-array>
 				<documentTypeDescriptor>
+					<field name="webResources">
+						<null/>
+					</field>
 					<field name="extensionPatch">
 						<null/>
 					</field>
 					<field name="name">
-						<String>JRA-Letter</String>
+						<String>JRA-Event</String>
 					</field>
 					<field name="schemaDescriptor">
 						<docTypeSchema>
@@ -33,7 +36,7 @@
 								<cssFile-array>
 									<cssFile>
 										<field name="href">
-											<String>${framework}/css/jra_letter.css</String>
+											<String>${framework}/css/jra_event.css</String>
 										</field>
 										<field name="title">
 											<String></String>
@@ -98,158 +101,12 @@
 											<Boolean>false</Boolean>
 										</field>
 									</action>
-									<action>
-										<field name="id">
-											<String>persNameList</String>
-										</field>
-										<field name="name">
-											<String>persNameList</String>
-										</field>
-										<field name="description">
-											<String>Generates a list of all persons at BauDi</String>
-										</field>
-										<field name="largeIconPath">
-											<String></String>
-										</field>
-										<field name="smallIconPath">
-											<String></String>
-										</field>
-										<field name="accessKey">
-											<String></String>
-										</field>
-										<field name="accelerator">
-											<null/>
-										</field>
-										<field name="actionModes">
-											<actionMode-array>
-												<actionMode>
-													<field name="xpathCondition">
-														<String></String>
-													</field>
-													<field name="argValues">
-														<serializableOrderedMap>
-															<entry>
-																<String>action</String>
-																<String>Replace</String>
-															</entry>
-															<entry>
-																<String>script</String>
-																<String>${frameworkDir}/xslt/persNamesSorted.xsl</String>
-															</entry>
-														</serializableOrderedMap>
-													</field>
-													<field name="operationID">
-														<String>ro.sync.ecss.extensions.commons.operations.XSLTOperation</String>
-													</field>
-												</actionMode>
-											</actionMode-array>
-										</field>
-										<field name="enabledInReadOnlyContext">
-											<Boolean>false</Boolean>
-										</field>
-									</action>
-									<action>
-										<field name="id">
-											<String>persIDsList</String>
-										</field>
-										<field name="name">
-											<String>persIDsList</String>
-										</field>
-										<field name="description">
-											<String>Generates a list of all personIDs at BauDi</String>
-										</field>
-										<field name="largeIconPath">
-											<String></String>
-										</field>
-										<field name="smallIconPath">
-											<String></String>
-										</field>
-										<field name="accessKey">
-											<String></String>
-										</field>
-										<field name="accelerator">
-											<null/>
-										</field>
-										<field name="actionModes">
-											<actionMode-array>
-												<actionMode>
-													<field name="xpathCondition">
-														<String></String>
-													</field>
-													<field name="argValues">
-														<serializableOrderedMap>
-															<entry>
-																<String>action</String>
-																<String>Replace</String>
-															</entry>
-															<entry>
-																<String>script</String>
-																<String>${frameworkDir}/xslt/persIDsSorted.xsl</String>
-															</entry>
-														</serializableOrderedMap>
-													</field>
-													<field name="operationID">
-														<String>ro.sync.ecss.extensions.commons.operations.XSLTOperation</String>
-													</field>
-												</actionMode>
-											</actionMode-array>
-										</field>
-										<field name="enabledInReadOnlyContext">
-											<Boolean>false</Boolean>
-										</field>
-									</action>
-									<action>
-										<field name="id">
-											<String>getViafByGnd</String>
-										</field>
-										<field name="name">
-											<String>getViafByGnd</String>
-										</field>
-										<field name="description">
-											<String>Requests VIAF-No by using GND-No</String>
-										</field>
-										<field name="largeIconPath">
-											<String></String>
-										</field>
-										<field name="smallIconPath">
-											<String></String>
-										</field>
-										<field name="accessKey">
-											<String></String>
-										</field>
-										<field name="accelerator">
-											<null/>
-										</field>
-										<field name="actionModes">
-											<actionMode-array>
-												<actionMode>
-													<field name="xpathCondition">
-														<String></String>
-													</field>
-													<field name="argValues">
-														<serializableOrderedMap>
-															<entry>
-																<String>script</String>
-																<String>${frameworkDir}/xql/getViafNoViaGndNo.xql</String>
-															</entry>
-														</serializableOrderedMap>
-													</field>
-													<field name="operationID">
-														<String>ro.sync.ecss.extensions.commons.operations.XQueryUpdateOperation</String>
-													</field>
-												</actionMode>
-											</actionMode-array>
-										</field>
-										<field name="enabledInReadOnlyContext">
-											<Boolean>false</Boolean>
-										</field>
-									</action>
 								</action-array>
 							</field>
 							<field name="menubarDescriptor">
 								<menu>
 									<field name="label">
-										<String>BauDi</String>
+										<String>JRA-Event</String>
 									</field>
 									<field name="accessKey">
 										<String></String>
@@ -261,10 +118,15 @@
 										<menuEntry-array>
 											<menuItem>
 												<field name="actionID">
-													<String>newFileID</String>
+													<String>makeIndex</String>
 												</field>
 											</menuItem>
 											<menuSeparator/>
+											<menuItem>
+												<field name="actionID">
+													<String>newFileID</String>
+												</field>
+											</menuItem>
 										</menuEntry-array>
 									</field>
 									<field name="context">
@@ -379,7 +241,7 @@
 									<String>TEI</String>
 								</field>
 								<field name="fileName">
-									<String>A*.xml, letter.xml</String>
+									<String>*</String>
 								</field>
 								<field name="publicID">
 									<String>*</String>
@@ -388,13 +250,13 @@
 									<String></String>
 								</field>
 								<field name="attributeLocalName">
-									<String>*</String>
+									<String>id</String>
 								</field>
 								<field name="attributeNamespace">
 									<String>*</String>
 								</field>
 								<field name="attributeValue">
-									<String>*</String>
+									<String>F*</String>
 								</field>
 							</documentTypeRule>
 						</documentTypeRule-array>

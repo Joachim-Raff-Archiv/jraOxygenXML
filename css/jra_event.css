@@ -1,0 +1,203 @@
+TEI {
+    background-color: #ffd373;
+}
+fileDesc{
+    margin-right: 10px;
+    padding: 10px 10px 0px 10px;
+    content: oxy_label(text, "Ereignis/Konzert", width, 10em, color, inherit) '\A'
+             oxy_label(text, "File ID:", width, 5em, color, inherit)
+             oxy_xpath('ancestor::TEI/string(@xml:id)');
+}
+
+titleStmt, publicationStmt, text {
+    display: none;
+}
+
+event {
+  border-radius: 3px;
+  padding: 20px;
+}
+event:before{
+    display: block;
+    float: left;
+    margin-right: 10px;
+    padding: 10px;
+    width: 95%;
+/*    border: 1px solid #cccccc;*/
+    font-size: 14px;
+    content: '(Alle Angaben sind optional.)';
+}
+settlement, date, time, title, label, persName, orgName {
+    display: block;
+    float: left;
+    margin-right: 5px;
+    padding: 5px;
+    width: 95%;
+    border: 1px solid #cccccc;
+    font-size: 18px;
+}
+
+item {
+    white-space: pre-wrap;
+    visibility: -oxy-collapse-text;
+    display: block;
+    float: left;
+    margin-right: 5px;
+    padding: 10px 0px 10px 0px;
+    width: 95%;
+    border: 1px solid #000000;
+    font-size: 18px;
+    content: oxy_button(action, oxy_action(
+                name, '+ Person', 
+                description, 'Insert another person', 
+                icon, url('insert.png'), 
+                operation, 'InsertFragmentOperation', 
+                arg-fragment, '<persName role="0" key="0" xmlns="http://www.tei-c.org/ns/1.0"></persName>'
+                arg-insertLocation, '.',
+                arg-insertPosition, 'Inside as last child'));
+}
+
+settlement:focus, date:focus, time:focus, title:focus, item:focus, label:focus, persName:focus, orgName:focus {
+  border: 3px solid #555;
+}
+placeName:before{
+  display: inline-block;
+  padding: 20px 0px 15px 0px;
+  content: oxy_label(text, "Veranstaltungsort", width, 10em, color, inherit);
+  font-weight: bold;
+}
+settlement[type=city]:before{
+  display: inline-block;
+  padding: 0px 10px 0px 0px;
+  content: oxy_label(text, "Ort/Stadt", width, 10em, color, inherit);
+  font-weight: bold;
+}
+settlement[type=venue]:before{
+  display: inline-block;
+  padding: 0px 10px 0px 0px;
+  content: oxy_label(text, "Saal/Lokalität", width, 10em, color, inherit);
+  font-weight: bold;
+}
+
+date:before{
+  display: inline-block;
+  padding: 0px 10px 0px 0px;
+  content: oxy_label(text, "Datum", width, 10em, color, inherit);
+  font-weight: bold;
+}
+
+time:before{
+  display: inline-block;
+  padding: 0px 10px 0px 0px;
+  content: oxy_label(text, "Zeit", width, 10em, color, inherit);
+  font-weight: bold;
+}
+
+desc > title:before{
+  display: inline-block;
+  padding: 0px 10px 0px 0px;
+  content: oxy_label(text, "Titel", width, 10em, color, inherit);
+  font-weight: bold;
+}
+
+item > title:not([key]):before{
+  display: inline-block;
+  padding: 0px 10px 0px 0px;
+  content: oxy_label(text, "Werk", width, 10em, color, inherit)
+           oxy_checkbox(
+             edit, '@key',
+             values, '0',
+             uncheckedValues, '',
+             labels, 'Raff'
+           )
+           oxy_textfield(edit, '#text', columns, 30)
+;
+  font-weight: bold;
+}
+
+item > title[key]:before{
+  display: inline-block;
+  padding: 0px 10px 0px 0px;
+  content: oxy_label(text, "Werk", width, 10em, color, inherit)
+           oxy_checkbox(
+             edit, '@key',
+             values, '0',
+             uncheckedValues, '',
+             labels, 'Raff'
+           )
+           oxy_combobox( 
+            edit, '@key',
+            editable, false,
+            width, 300px,
+            values, oxy_xpath("string-join(('0', doc('../../../jraOxygenXML/temp/jraWorksIndex.xml')//tei:entry[@type='work']/@key/string()),', ')"),
+            labels, oxy_xpath("string-join(('Bitte Wählen', doc('../../../jraOxygenXML/temp/jraWorksIndex.xml')//tei:entry[@type='work']/@name/normalize-space(string())),', ')")
+            )
+            ' ' oxy_label(text, "\A(Titel falls abweichend)", width, 10em, inherit)
+             oxy_textfield(edit, '#text', columns, 30);
+  font-weight: bold;
+}
+
+list:before{
+  display: inline-block;
+  padding: 20px 0px 15px 0px;
+  content: oxy_label(text, "Programmpunkte ", width, 10em, color, inherit)
+           oxy_button(action, oxy_action(
+                name, '+ Programmpunkt', 
+                description, 'Insert another item', 
+                icon, url('insert.png'), 
+                operation, 'InsertFragmentOperation', 
+                arg-fragment, '<item xmlns="http://www.tei-c.org/ns/1.0"><title  type="work"></title><persName role="0"/></item>'));
+  font-weight: bold;
+}
+
+label:before{
+  display: inline-block;
+  padding: 0px 10px 0px 0px;
+  content: oxy_label(text, "Titel (ggf.)", width, 10em, color, inherit);
+  font-weight: bold;
+}
+
+persName:before{
+  display: inline-block;
+  padding: 0px 10px 0px 0px;
+  content: oxy_label(text, "Person", width, 10em, color, inherit)
+           oxy_combobox( 
+            edit, '@key',
+            editable, false,
+            width, 300px,
+            values, oxy_xpath("string-join(('0', doc('../../../jraOxygenXML/temp/jraPersonsIndex.xml')//tei:entry[@type='pers']/@key/string()),', ')"),
+            labels, oxy_xpath("string-join(('Bitte Wählen', doc('../../../jraOxygenXML/temp/jraPersonsIndex.xml')//tei:entry[@type='pers']/@name/normalize-space(string())),', ')")
+            )
+            ' ' oxy_label(text, "\A(Name falls abweichend)", width, 10em, inherit)
+             oxy_textfield(edit, '#text', columns, 30)
+             oxy_label(text, "\ARolle", width, 10em, inherit)
+             oxy_combobox( 
+            edit, '@role',
+            editable, false,
+            width, 300px,
+            values, oxy_xpath("string-join(('0', doc('../../../jraOxygenXML/temp/jraRolesIndex.xml')//tei:entry[@type='role']/@name/normalize-space(string())),', ')"),
+            labels, oxy_xpath("string-join(('Bitte Wählen', doc('../../../jraOxygenXML/temp/jraRolesIndex.xml')//tei:entry[@type='role']/@name/normalize-space(string())),', ')")
+            )
+            ' ' oxy_label(text, "\A(Rolle falls abweichend)", width, 10em, inherit)
+             oxy_textfield(edit, '#text', columns, 30);
+}
+note:before{
+display: inline-block;
+  padding: 0px 10px 0px 0px;
+	content: oxy_label(text, "Anmerkung", width, 10em, color, inherit)
+;
+	font-weight: bold;
+}
+note:focus {
+  border: 3px solid #555;
+}
+
+item:after {
+    content:  oxy_button(actionID, 'moveUp', showIcon, true)
+              oxy_button(actionID, 'moveDown', showIcon, true)
+              oxy_button(action, oxy_action(
+                name, 'X', 
+                description, 'Delete this note', 
+                operation, 'ro.sync.ecss.extensions.commons.operations.DeleteElementOperation')
+              );
+}

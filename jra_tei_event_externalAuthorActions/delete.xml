@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<a:authorAction xmlns:a="http://www.oxygenxml.com/ns/author/external-action"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.oxygenxml.com/ns/author/external-action
+  http://www.oxygenxml.com/ns/author/external-action/authorAction.xsd" id="delete">
+  <a:name>Eintrag löschen</a:name>
+  <a:description>Diesen Eintrag löschen.</a:description>
+  <a:smallIconPath href="${framework}/pics/icons/times-circle_16.png"/>
+  <a:largeIconPath href="${framework}/pics/icons/trash_24.png"/>
+  <a:operations>
+    <a:operation id="DeleteElementOperation">
+      <a:arguments>
+        <a:argument name="elementLocation">.</a:argument>
+      </a:arguments>
+    </a:operation>
+  </a:operations>
+  <a:enabledInReadOnlyContext>false</a:enabledInReadOnlyContext>
+</a:authorAction>

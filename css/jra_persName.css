@@ -1,0 +1,137 @@
+/* Handling of names */
+
+persName {
+       content: 'Hinzufügen: ' oxy_button(action, oxy_action(
+                name, '+ Vorname', 
+                description, 'Insert a forename', 
+                icon, url('insert.png'), 
+                operation, 'InsertFragmentOperation', 
+                arg-fragment, '<forename xmlns="http://www.tei-c.org/ns/1.0" type="usage"/>'))
+                oxy_button(action, oxy_action(
+                name, '+ Nachname', 
+                description, 'Insert a surname', 
+                icon, url('insert.png'), 
+                operation, 'InsertFragmentOperation', 
+                arg-fragment, '<surname xmlns="http://www.tei-c.org/ns/1.0" type=""/>'))
+                oxy_button(action, oxy_action(
+                name, '+ Generation', 
+                description, 'Insert a genName', 
+                icon, url('insert.png'), 
+                operation, 'InsertFragmentOperation', 
+                arg-fragment, '<genName xmlns="http://www.tei-c.org/ns/1.0" type=""/>'))
+                oxy_button(action, oxy_action(
+                name, '+ Adelsprädikat', 
+                description, 'Insert a nameLink', 
+                icon, url('insert.png'), 
+                operation, 'InsertFragmentOperation', 
+                arg-fragment, '<nameLink xmlns="http://www.tei-c.org/ns/1.0" type=""/>'))
+                oxy_button(action, oxy_action(
+                name, '+ Funktion', 
+                description, 'Insert a roleName', 
+                icon, url('insert.png'), 
+                operation, 'InsertFragmentOperation', 
+                arg-fragment, '<roleName xmlns="http://www.tei-c.org/ns/1.0"/>'))
+                oxy_button(action, oxy_action(
+                name, '+ Titel', 
+                description, 'Insert a title like Dr./Prof.', 
+                icon, url('insert.png'), 
+                operation, 'InsertFragmentOperation', 
+                arg-fragment, '<name xmlns="http://www.tei-c.org/ns/1.0" type="title">Dr.</name>'))
+                oxy_button(action, oxy_action(
+                name, '+ Beiname', 
+                description, 'Insert an addName', 
+                icon, url('insert.png'), 
+                operation, 'InsertFragmentOperation', 
+                arg-fragment, '<addName xmlns="http://www.tei-c.org/ns/1.0"/>'))
+                oxy_button(action, oxy_action(
+                name, '+ Name (unspez.)', 
+                description, 'Insert a unspecified name', 
+                icon, url('insert.png'), 
+                operation, 'InsertFragmentOperation', 
+                arg-fragment, '<name xmlns="http://www.tei-c.org/ns/1.0"/>'));
+}
+
+forename:before{
+  content: oxy_label(text, "Vorname", width, 30px, styles,
+      "color:black;")
+}
+
+forename {
+    content: oxy_textfield(columns, 20, edit, "#text", "true")
+             ' '
+             oxy_checkbox(
+             edit, '@type',
+             values, "used",
+             uncheckedValues, 'unused',
+             labels, 'Ansatzname')
+             /*oxy_combobox(
+            edit, "@sort", 
+            editable, false,
+            values, "1,2,3,4,5,6,7,8,9,10",
+            labels, "1, 2, 3, 4, 5, 6, 7, 8, 9, 10")*/;
+}
+
+surname:before{
+	content: oxy_label(text, "Nachname", width, 30px, styles,
+      "color:black;");
+}
+
+surname {
+    content: oxy_textfield(columns, 20, edit, "#text", "true")
+             oxy_combobox( 
+                 edit, '@type',
+                 editable, false,
+                 width, 100px,
+                 values, oxy_xpath("string-join(('', doc('../../../resources/i18n/lang-de.xml')/node()/node()[contains(@key,'name.type')]/@key/string()),', ')"),
+                 labels, oxy_xpath("string-join(('Bitte Wählen', doc('../../../resources/i18n/lang-de.xml')/node()/node()[contains(@key,'name.type')]/text()/normalize-space(string())),', ')")
+                )
+}
+
+genName:before{
+	content: oxy_label(text, "Generation", width, 30px, styles,
+      "color:black;")
+      oxy_combobox(
+            edit, "@key",
+            editable, true,
+            values, " , jun, sen",
+            labels, "Bitte Wählen, Junior, Senior");
+}
+nameLink:before{
+  
+	content: oxy_label(text, "Adelsprädikat", width, 30px, styles,
+      "color:black;") ' ' oxy_combobox(
+            edit, "@type", 
+            editable, false,
+            values, ",mriPersonalia.name.type.unspec, mriPersonalia.name.type.birth, mriPersonalia.name.type.married, mriPersonalia.name.type.divorced, mriPersonalia.name.type.widowed",
+            labels, "Bitte Wählen, Unspezifiziert, Geburtsname, Ehename (verh.), Ehename (gesch.), Ehename (verwitw.)");
+}
+nameLink {
+content: oxy_combobox(
+            edit, "#text", 
+            editable, true,
+            width, 60px,
+            values, "von,vom,von der,von dem,von und zu,zu,de,d’,sûr")
+}
+
+roleName:before{
+  
+	content: oxy_label(text, "Funktion", width, 30px, styles,
+      "color:black;");
+}
+addName:before{
+  
+	content: oxy_label(text, "Beiname", width, 30px, styles,
+      "color:black;");
+}
+
+name:not([type=title]):before{
+  
+	content: oxy_label(text, "Name (unspez.)", width, 30px, styles,
+      "color:black;");
+}
+
+name[type=title]:before{
+  
+	content: oxy_label(text, "Titel", width, 30px, styles,
+      "color:black;");
+}

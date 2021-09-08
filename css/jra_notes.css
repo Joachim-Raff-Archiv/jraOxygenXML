@@ -1,0 +1,84 @@
+/* Handling of notes */
+
+notesStmt {
+    display:block;
+    font-size: 1em;
+	padding-bottom: 1em;
+    border-bottom: 2px solid red;
+}
+
+notesStmt:before {
+    font-size: 1.5em;
+    font-weight: bold;
+    padding-top: 1.5em;
+    color: dimgray;
+    content: 'Notizen ' oxy_button(action, oxy_action(
+            name, '+ Notiz', 
+            description, 'Insert another note', 
+            icon, url('insert.png'), 
+            operation, 'InsertFragmentOperation', 
+            arg-fragment, '<note xmlns="http://www.tei-c.org/ns/1.0" resp="${homeDir}"><date when-iso="${date(yyyy-MM-dd)}"/></note>',
+            arg-insertLocation, '.',
+            arg-insertPosition, 'Inside as last child'));
+}
+
+note > date {
+    display: none;
+}
+
+note:not(key):not([type=fm]):before {
+    white-space: pre-wrap;
+    content: 'Notiz ' counter(notes) ': '
+             oxy_combobox(
+            edit, "@type", 
+            editable, false,
+            values, ",bioSummary, comment, category, dataPool",
+            labels, "Bitte wählen, Zur Biographie, Kommentar, Kategorie, Datenpool");
+}
+note[key]:not([type=fm]):before {
+    white-space: pre-wrap;
+    content: 'Notiz ' counter(notes) ': '
+            oxy_combobox( 
+            edit, '@key',
+            editable, false,
+            width, 200px,
+            values, oxy_xpath("string-join(('', doc('../../../resources/i18n/lang-de.xml')/node()/node()[contains(@key,'orga.classification')]/@key/string()),', ')"),
+            labels, oxy_xpath("string-join(('Bitte Wählen', doc('../../../resources/i18n/lang-de.xml')/node()/node()[contains(@key,'orga.classification')]/text()/normalize-space(string())),', ')")
+            );
+}
+
+note[type=fm]:before {
+    white-space: pre-wrap;
+    font-style: normal;
+    content: 'Notiz ' counter(notes)
+             oxy_concat(' [', attr(type), ', ', attr(subtype), ']: ');
+}
+
+note:not([type=fm]) {
+counter-increment: notes;
+padding-bottom: 0.5em;
+display: block;
+content: oxy_textArea(
+          edit, '#text',
+          columns, 60,
+          rows, 5,
+          contentType, 'text/xml');
+}
+
+note[type=fm] {
+counter-increment: notes;
+padding-bottom: 0.75em;
+display: block;
+font-style: italic;
+content: oxy_xpath("./text()");
+}
+
+note:not([type='fm']):after {
+    content:  oxy_button(actionID, 'moveUp', showIcon, true)
+              oxy_button(actionID, 'moveDown', showIcon, true)
+              oxy_button(action, oxy_action(
+                name, 'X', 
+                description, 'Delete this note', 
+                operation, 'ro.sync.ecss.extensions.commons.operations.DeleteElementOperation')
+              );
+}
