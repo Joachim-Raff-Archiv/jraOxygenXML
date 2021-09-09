@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0" xml:id="A00000">
+   <teiHeader>
+      <fileDesc>
+         <titleStmt>
+            <title xml:lang="de" level="a">Brief vom [Datum] – [Absender] an [Empfänger]</title>
+            <author key="C00480">Severin Kolb</author>
+         </titleStmt>
+         <publicationStmt>
+            <publisher>Joachim-Raff-Archiv, Lachen/SZ, Switzerland</publisher>
+            <availability status="free" xmlns="http://www.tei-c.org/ns/1.0">
+               <p><ref target="http://portal.raff-archiv.ch">Joachim-Raff-Archiv Online</ref></p>
+            </availability>
+         </publicationStmt>
+         <notesStmt>
+            <note type="regeste"/>
+         </notesStmt>
+         <sourceDesc>
+            <msDesc>
+               <msIdentifier>
+                  <country key="DE"/>
+                  <settlement>Ort</settlement>
+                  <institution>
+                     <orgName key="0"/>
+                  </institution>
+                  <repository>Musiksammlung</repository>
+                  <collection>Raffiana</collection>
+                  <idno resp="shelfmark">Signatur</idno>
+               </msIdentifier>
+               <msContents>
+                  <msItem>
+                     <incipit/>
+                  </msItem>
+               </msContents>
+               <physDesc>
+                  <objectDesc>
+                     <supportDesc material="paper">
+                        <extent/>
+                     </supportDesc>
+                  </objectDesc>
+                  <handDesc>
+                     <p decls="schreibmittel"/>
+                  </handDesc>
+               </physDesc>
+               <history>
+                  <provenance>
+                     <p/>
+                  </provenance>
+               </history>
+            </msDesc>
+            <bibl/>
+         </sourceDesc>
+      </fileDesc>
+      <profileDesc>
+         <textClass>
+            <keywords>
+               <term>Brief</term>
+            </keywords>
+         </textClass>
+         <correspDesc>
+            <correspAction type="sent">
+               <persName key=""></persName>
+               <settlement></settlement>
+               <date type="source"></date>
+            </correspAction>
+            <correspAction type="received">
+               <persName key=""></persName>
+               <settlement/>
+            </correspAction>
+         </correspDesc>
+      </profileDesc>
+   </teiHeader>
+   <text>
+      <body>
+         <opener/>
+         <div type="volltext">
+            <p/>
+         </div>
+      </body>
+   </text>
+</TEI>
