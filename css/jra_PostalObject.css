@@ -18,19 +18,54 @@ TEI {
 	/*"Status: " oxy_xpath("root()/node()/string(@status)") '\A'*/;
 }
 
-persName, forename, surname, nameLink, roleName, genName, addName, orgName, birth, death, faith, education, sex, nationality, occupation, idno[type=gnd], listPerson, idno[type=shelfmark], idno[type=viaf], note, region, date, geogName, address, event, desc, category, name, text{
+titleStmt {
+    content: 'FileDesc';
+    font-weight: bold;
+    border: 1px solid black;
+}
+
+titleStmt > title:before{
+    font-weight:normal;
+    content: oxy_label(text, "Titel des Dokuments", width, 15em, color, inherit)
+}
+
+titleStmt > title{
+    display: block;
+    content: oxy_textfield(
+          edit, '#content',
+          columns, 40)
+;
+}
+
+titleStmt > author:before{
+    font-weight:normal;
+    content: oxy_label(text, "Autor des Dokuments", width, 15em, color, inherit)
+}
+
+titleStmt > author {
+    display: block;
+    content: oxy_combobox( 
+            edit, '@key',
+            editable, false,
+            width, 300px,
+            values, oxy_xpath("string-join(('0', doc('../../../../jraOxygenXML/temp/jraPersonsIndex.xml')//tei:entry/@key/string()),', ')"),
+            labels, oxy_xpath("string-join(('Bitte Wählen', doc('../../../../jraOxygenXML/temp/jraPersonsIndex.xml')//tei:entry/@name/string()),', ')")
+            );
+}
+
+persName, forename, surname, nameLink, roleName, genName, addName, orgName, birth, death, faith, education, sex, nationality, occupation, listPerson, idno[resp=shelfmark], idno[resp=JRA-copy], idno[resp=notJRA], note, region, date, geogName, address, event, desc, category, name, text{
 display: block;
 padding: 10px 10px 10px 10px;
 visibility: -oxy-collapse-text;
 }
 
-street, postCode, settlement, country, district, region, repository, decoNote {
+street, postCode, settlement, country, district, region, repository, collection,  decoNote {
 display: block;
 padding: 10px 0px 0px 10px;
 visibility: -oxy-collapse-text;
 }
 
- surname, roleName, addName, genName, faith, education, sex, nationality, idno[type=gnd], idno[type=shelfmark], idno[type=viaf], region, settlement, geogName, address, street, postCode, name, district, country, repository {
+ surname, roleName, addName, genName, faith, education, sex, nationality, idno[resp=shelfmark], idno[resp=JRA-copy], idno[resp=notJRA], region, settlement, geogName, address, street, postCode, name, district, country, repository, collection {
 content: oxy_textfield(columns, 20, edit, "#text", "true");
 }
 
@@ -71,33 +106,7 @@ listPerson > person[key] {
              oxy_textfield(edit, '#text', columns, 30);
 }
 
-/* handling of identifiers (IDs) */
-idno[type='gnd']:before {
-    font-family: sans-serif;
-    font-style: normal;
-    content: "GND-ID: "
-}
-idno[type='gnd']:after {
-    font-family: sans-serif;
-    font-style: normal;
-    -oxy-link: oxy_concat("http://d-nb.info/gnd/", oxy_xpath('./text()'));
-    content: oxy_url('../icons/link16.jpg');
-}
-
-idno[type='viaf']:before {
-    font-family: sans-serif;
-    font-style: normal;
-    content: "VIAF-ID: "
-}
-
-idno[type='viaf']:after {
-    font-family: sans-serif;
-    font-style: normal;
-    -oxy-link: oxy_concat("http://viaf.org/viaf/", oxy_xpath('./text()'));
-    content: oxy_url('../icons/link16.jpg');
-}
-
-idno[type=shelfmark]:before {
+idno[resp=shelfmark]:before {
     font-family: sans-serif;
     font-style: normal;
     content: oxy_label(text, "Signatur", width, 7em, color, inherit)
@@ -105,11 +114,20 @@ idno[type=shelfmark]:before {
     
 }
 
-persName[type='fm']:before {
-    display:inline-block;
-    content: 'Name (FM): ';
-    font-size: smaller;
-    color: black;
+idno[resp=notJRA]:before {
+    font-family: sans-serif;
+    font-style: normal;
+    content: oxy_label(text, "[Nicht JRA]", width, 7em, color, inherit)
+;
+    
+}
+
+idno[resp=JRA-copy]:before {
+    font-family: sans-serif;
+    font-style: normal;
+    content: oxy_label(text, "Kopie im JRA", width, 7em, color, inherit)
+;
+    
 }
 persName[type='full']:before {
  content: oxy_label(text, "Name der Person", width, 30px, styles,
@@ -121,14 +139,6 @@ persName[type='pseud']:before {
  content: oxy_label(text, "Name der Person", width, 30px, styles,
       "color:black;");
       border-bottom: 1px solid slategray;
-}
-
-persName[type='fm'] {
-    display: block;
-    content: oxy_xpath("//persName[@type='fm']/text()");
-    font-size: smaller;
-    font-style: italic;
-    color: slategray;
 }
 
 persName:before{
@@ -350,29 +360,32 @@ settlement:before{
       "color:black;");
 }
 
-institution:before{
-    content: oxy_label(text, "Bestandshaltende Institution", width, 10em, color, inherit) '\A'
-                /*oxy_action(
-                 name, '+ Person', 
-                 description, 'Insert another name for this institution', 
-                 operation, 'ro.sync.ecss.extensions.commons.operations.InsertFragmentOperation', 
-                 icon, url('insert.png'), 
-                 arg-fragment, '<persName key="0" xmlns="http://www.tei-c.org/ns/1.0"/>',
-                 arg-insertLocation, './node()',
-                 arg-insertPosition, 'After') ' '*/
-                oxy_action(
+institution:before {
+    content: oxy_label(text, "Bestandshaltende Institution", width, 10em, color, inherit) 
+             '\A';
+}
+
+institution{
+    
+    /*oxy_action(
                  name, '+ Institution', 
                  description, 'Insert another name for this institution', 
                  operation, 'ro.sync.ecss.extensions.commons.operations.InsertFragmentOperation', 
                  icon, url('insert.png'), 
                  arg-fragment, '<orgName key="0" xmlns="http://www.tei-c.org/ns/1.0"/>',
                  arg-insertLocation, '.',
-                 arg-insertPosition, 'Inside as last child');
+                 arg-insertPosition, 'Inside as last child')*/
 }
 
 repository:before{
   font-style: normal;
 	content: oxy_label(text, "Verwahrungsort", width, 7em, styles,
+      "color:black;");
+}
+
+collection:before{
+  font-style: normal;
+	content: oxy_label(text, "Sammlung", width, 7em, styles,
       "color:black;");
 }
 
@@ -395,7 +408,7 @@ country:before {
                 editable, false,
                 values, '0, DE, CH, A, GB',
                 labels, 'Bitte wählen, Deutschland, Schweiz, Österreich, Großbritannien'
-             )
+             ) ' (falls abweichend) '
 }
 
 
@@ -686,14 +699,10 @@ listBibl, bibl {
     display: none;
 }
 
-notesStmt, note, note > date {
+notesStmt, note, note > date, msContents, history, opener, body > div, publicationStmt {
     display:none;
 }
 
-/* disable fields, that shouldn't be changed */
-idno[type="MRI_Personalia"], occupation[subtype="fm"], fileDesc > titleStmt, fileDesc > publicationStmt, note[type=workRefs] > *, revisionDesc, history {
-    display: none;
-}
 
 note:not([type='fm']):not([type='workRefs']):after, listPerson > person:after, forename:after, surname:after, date:after, orgName:after, persName:after, genName:after, addName:after, name:after, roleName:after, nameLink:after, address:after, decoNote:after, language:not(:first-of-type):after {
     content: oxy_button(action, oxy_action(

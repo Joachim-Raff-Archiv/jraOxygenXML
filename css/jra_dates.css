@@ -1,0 +1,213 @@
+correspAction{
+font-size: small;
+font-style:italic;
+    content: '\A Datierungen bitte ausschließlich im ISO-Standard angeben: JJJJ-MM-TT \A' 'Ist eine Stelle des Datums nicht bekannt, bitte das Feld (custom) verwenden, z.B. 1916-00-16 \A'
+                'ISO-Std '
+                oxy_button(action, oxy_action(
+                name, '+ Wann', 
+                description, 'Insert a date in ISO-standard', 
+                icon, url('insert.png'), 
+                operation, 'InsertFragmentOperation', 
+                arg-fragment, '<date when="" xmlns="http://www.tei-c.org/ns/1.0"/>')
+                /*arg-insertLocation, '.',
+            arg-insertPosition, 'After'*/)
+                oxy_button(action, oxy_action(
+                name, '+ nicht vor', 
+                description, 'Insert a date in ISO-standard', 
+                icon, url('insert.png'), 
+                operation, 'InsertFragmentOperation', 
+                arg-fragment, '<date notBefore="" xmlns="http://www.tei-c.org/ns/1.0"/>'))
+                oxy_button(action, oxy_action(
+                name, '+ nicht nach', 
+                description, 'Insert a date in ISO-standard', 
+                icon, url('insert.png'), 
+                operation, 'InsertFragmentOperation', 
+                arg-fragment, '<date notAfter="" xmlns="http://www.tei-c.org/ns/1.0"/>'))
+                '\A'
+                'custom '
+                oxy_button(action, oxy_action(
+                name, '+ Wann', 
+                description, 'Insert a custom date in non ISO-standard', 
+                icon, url('insert.png'), 
+                operation, 'InsertFragmentOperation', 
+                arg-fragment, '<date when-custom="0000-00-00" xmlns="http://www.tei-c.org/ns/1.0"/>'))
+                oxy_button(action, oxy_action(
+                name, '+ nicht vor', 
+                description, 'Insert a custom date in non ISO-standard', 
+                icon, url('insert.png'), 
+                operation, 'InsertFragmentOperation', 
+                arg-fragment, '<date notBefore-custom="0000-00-00" xmlns="http://www.tei-c.org/ns/1.0"/>'))
+                oxy_button(action, oxy_action(
+                name, '+ nicht nach', 
+                description, 'Insert a custom date in non ISO-standard', 
+                icon, url('insert.png'), 
+                operation, 'InsertFragmentOperation', 
+                arg-fragment, '<date notAfter-custom="0000-00-00" xmlns="http://www.tei-c.org/ns/1.0"/>'));
+}
+
+
+date[when]:before {
+font-style: normal;
+    content: 'Datum '
+             oxy_combobox( 
+             edit, '@type',
+             editable, false,
+             values, 'source, postal, editor',
+             labels, 'Quelle, Poststempel, Editor'
+             );
+}
+date[when] {
+    content: oxy_datePicker(
+            columns, 16, 
+            edit, "@when",
+            format, "yyyy-MM-dd");
+}
+
+date[when-custom]:before {
+font-style: normal;
+    content: 'Datum (custom) '
+             oxy_combobox( 
+             edit, '@type',
+             editable, false,
+             values, 'source, postal, editor',
+             labels, 'Quelle, Poststempel, Editor'
+             );
+}
+
+date[when-custom] {
+    content: oxy_textfield(
+            width, 20, 
+            edit, "@when-custom");
+}
+
+date[from] {
+font-style: normal;
+    content: 'Von '
+             oxy_combobox( 
+             edit, '@type',
+             editable, false,
+             values, 'source, postal, editor',
+             labels, 'Quelle, Poststempel, Editor'
+             ) ' ' oxy_datePicker(
+            columns, 16, 
+            edit, "@from",
+            format, "yyyy-MM-dd") ' bis '
+            oxy_combobox( 
+             edit, '@type',
+             editable, false,
+             values, 'source, postal, editor',
+             labels, 'Quelle, Poststempel, Editor'
+             ) ' ' oxy_datePicker(
+            columns, 16, 
+            edit, "@to",
+            format, "yyyy-MM-dd");
+}
+
+
+date[from-custom] {
+font-style: normal;
+    content: 'Von '
+             oxy_combobox( 
+             edit, '@type',
+             editable, false,
+             values, 'source, postal, editor',
+             labels, 'Quelle, Poststempel, Editor'
+             ) ' ' oxy_textfield(
+            width, 20, 
+            edit, "@from-custom")
+            ' bis ' 
+            oxy_combobox( 
+             edit, '@type',
+             editable, false,
+             values, 'source, postal, editor',
+             labels, 'Quelle, Poststempel, Editor'
+             ) ' ' oxy_textfield(
+            width, 20, 
+            edit, "@to-custom");
+}
+
+date[notBefore]:before {
+font-style: normal;
+    content: 'Nicht vor '
+             oxy_combobox( 
+             edit, '@type',
+             editable, false,
+             values, 'source, postal, editor',
+             labels, 'Quelle, Poststempel, Editor'
+             );
+}
+
+date[notBefore] {
+    content: oxy_datePicker(
+            columns, 16, 
+            edit, "@notBefore",
+            format, "yyyy-MM-dd");
+}
+
+date[notBefore-custom]:before {
+font-style: normal;
+    content: 'Nciht vor (custom) '
+             oxy_combobox( 
+             edit, '@type',
+             editable, false,
+             values, 'source, postal, editor',
+             labels, 'Quelle, Poststempel, Editor'
+             );
+}
+
+date[notBefore-custom] {
+    content: oxy_textfield(
+            width, 20, 
+            edit, "@notBefore-custom");
+}
+
+date[notAfter]:before {
+font-style: normal;
+    content: 'Nicht nach '
+             oxy_combobox( 
+             edit, '@type',
+             editable, false,
+             values, 'source, postal, editor',
+             labels, 'Quelle, Poststempel, Editor'
+             );
+}
+
+date[notAfter] {
+    content: oxy_datePicker(
+            columns, 16, 
+            edit, "@notAfter",
+            format, "yyyy-MM-dd");
+}
+
+date[notAfter-custom]:before {
+font-style: normal;
+    content: 'Nicht nach '
+             oxy_combobox( 
+             edit, '@type',
+             editable, false,
+             values, 'source, postal, editor',
+             labels, 'Quelle, Poststempel, Editor'
+             );
+}
+
+date[notAfter-custom] {
+    content: oxy_textfield(
+            width, 20, 
+            edit, "@notAfter-custom");
+}
+
+date > note[type=GNDdiffers] {
+    display:inline-block;
+    content: oxy_checkbox(
+                edit, '@subtype',
+                values, 'true',
+                uncheckedValues, 'false',
+                labels, 'GND weicht ab'
+                );
+}
+
+date > note[type=comment] {
+    display:block;
+    content: oxy_label(text, "ggf. Anmerkung", width, 5em, color, inherit)
+             oxy_textfield(columns, 25, edit, "#text");
+}
