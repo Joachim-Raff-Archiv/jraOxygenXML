@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<a:authorAction xmlns:a="http://www.oxygenxml.com/ns/author/external-action"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.oxygenxml.com/ns/author/external-action
+  http://www.oxygenxml.com/ns/author/external-action/authorAction.xsd" id="makeIndex">
+  <a:name>Index erzeugen</a:name>
+  <a:description>Erstellt oder aktualisiert die Indexdateien. Diese werden benötigt um die
+    Auswahlfelder (Combobox) zu befüllen. Mit der Aktualisierung stehen dann alle
+    Auswahlmöglichkeiten zur Verfügung.</a:description>
+  <a:smallIconPath href="${framework}/icons/index16.png"/>
+  <a:largeIconPath href="${framework}/icons/index24.png"/>
+  <a:operations>
+    <a:operation id="XQueryUpdateOperation">
+      <a:arguments>
+        <a:argument name="script">${frameworkDir}/xql/makeIndex.xql</a:argument>
+      </a:arguments>
+    </a:operation>
+  </a:operations>
+  <a:enabledInReadOnlyContext>false</a:enabledInReadOnlyContext>
+</a:authorAction>
