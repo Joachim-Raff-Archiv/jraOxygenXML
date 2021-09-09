@@ -12,7 +12,7 @@
 						<null/>
 					</field>
 					<field name="name">
-						<String>JRA-Postals</String>
+						<String>JRA-PostalObjects</String>
 					</field>
 					<field name="schemaDescriptor">
 						<docTypeSchema>
@@ -67,6 +67,17 @@
 											<Boolean>true</Boolean>
 										</field>
 									</cssFile>
+									<cssFile>
+										<field name="href">
+											<String>${framework}/css/jra_dates.css</String>
+										</field>
+										<field name="title">
+											<String>Dates</String>
+										</field>
+										<field name="alternate">
+											<Boolean>true</Boolean>
+										</field>
+									</cssFile>
 								</cssFile-array>
 							</field>
 							<field name="mergeCSSsFromDocument">
@@ -76,205 +87,12 @@
 								<Boolean>true</Boolean>
 							</field>
 							<field name="actionDescriptors">
-								<action-array>
-									<action>
-										<field name="id">
-											<String>newFileID</String>
-										</field>
-										<field name="name">
-											<String>new file ID</String>
-										</field>
-										<field name="description">
-											<String>Generates an ID for this Dokument</String>
-										</field>
-										<field name="largeIconPath">
-											<String></String>
-										</field>
-										<field name="smallIconPath">
-											<String></String>
-										</field>
-										<field name="accessKey">
-											<String></String>
-										</field>
-										<field name="accelerator">
-											<null/>
-										</field>
-										<field name="actionModes">
-											<actionMode-array>
-												<actionMode>
-													<field name="xpathCondition">
-														<String></String>
-													</field>
-													<field name="argValues">
-														<serializableOrderedMap>
-															<entry>
-																<String>script</String>
-																<String>${frameworkDir}/xql/newFileID.xql</String>
-															</entry>
-														</serializableOrderedMap>
-													</field>
-													<field name="operationID">
-														<String>ro.sync.ecss.extensions.commons.operations.XQueryUpdateOperation</String>
-													</field>
-												</actionMode>
-											</actionMode-array>
-										</field>
-										<field name="enabledInReadOnlyContext">
-											<Boolean>false</Boolean>
-										</field>
-									</action>
-									<action>
-										<field name="id">
-											<String>persNameList</String>
-										</field>
-										<field name="name">
-											<String>persNameList</String>
-										</field>
-										<field name="description">
-											<String>Generates a list of all persons at BauDi</String>
-										</field>
-										<field name="largeIconPath">
-											<String></String>
-										</field>
-										<field name="smallIconPath">
-											<String></String>
-										</field>
-										<field name="accessKey">
-											<String></String>
-										</field>
-										<field name="accelerator">
-											<null/>
-										</field>
-										<field name="actionModes">
-											<actionMode-array>
-												<actionMode>
-													<field name="xpathCondition">
-														<String></String>
-													</field>
-													<field name="argValues">
-														<serializableOrderedMap>
-															<entry>
-																<String>action</String>
-																<String>Replace</String>
-															</entry>
-															<entry>
-																<String>script</String>
-																<String>${frameworkDir}/xslt/persNamesSorted.xsl</String>
-															</entry>
-														</serializableOrderedMap>
-													</field>
-													<field name="operationID">
-														<String>ro.sync.ecss.extensions.commons.operations.XSLTOperation</String>
-													</field>
-												</actionMode>
-											</actionMode-array>
-										</field>
-										<field name="enabledInReadOnlyContext">
-											<Boolean>false</Boolean>
-										</field>
-									</action>
-									<action>
-										<field name="id">
-											<String>persIDsList</String>
-										</field>
-										<field name="name">
-											<String>persIDsList</String>
-										</field>
-										<field name="description">
-											<String>Generates a list of all personIDs at BauDi</String>
-										</field>
-										<field name="largeIconPath">
-											<String></String>
-										</field>
-										<field name="smallIconPath">
-											<String></String>
-										</field>
-										<field name="accessKey">
-											<String></String>
-										</field>
-										<field name="accelerator">
-											<null/>
-										</field>
-										<field name="actionModes">
-											<actionMode-array>
-												<actionMode>
-													<field name="xpathCondition">
-														<String></String>
-													</field>
-													<field name="argValues">
-														<serializableOrderedMap>
-															<entry>
-																<String>action</String>
-																<String>Replace</String>
-															</entry>
-															<entry>
-																<String>script</String>
-																<String>${frameworkDir}/xslt/persIDsSorted.xsl</String>
-															</entry>
-														</serializableOrderedMap>
-													</field>
-													<field name="operationID">
-														<String>ro.sync.ecss.extensions.commons.operations.XSLTOperation</String>
-													</field>
-												</actionMode>
-											</actionMode-array>
-										</field>
-										<field name="enabledInReadOnlyContext">
-											<Boolean>false</Boolean>
-										</field>
-									</action>
-									<action>
-										<field name="id">
-											<String>getViafByGnd</String>
-										</field>
-										<field name="name">
-											<String>getViafByGnd</String>
-										</field>
-										<field name="description">
-											<String>Requests VIAF-No by using GND-No</String>
-										</field>
-										<field name="largeIconPath">
-											<String></String>
-										</field>
-										<field name="smallIconPath">
-											<String></String>
-										</field>
-										<field name="accessKey">
-											<String></String>
-										</field>
-										<field name="accelerator">
-											<null/>
-										</field>
-										<field name="actionModes">
-											<actionMode-array>
-												<actionMode>
-													<field name="xpathCondition">
-														<String></String>
-													</field>
-													<field name="argValues">
-														<serializableOrderedMap>
-															<entry>
-																<String>script</String>
-																<String>${frameworkDir}/xql/getViafNoViaGndNo.xql</String>
-															</entry>
-														</serializableOrderedMap>
-													</field>
-													<field name="operationID">
-														<String>ro.sync.ecss.extensions.commons.operations.XQueryUpdateOperation</String>
-													</field>
-												</actionMode>
-											</actionMode-array>
-										</field>
-										<field name="enabledInReadOnlyContext">
-											<Boolean>false</Boolean>
-										</field>
-									</action>
-								</action-array>
+								<action-array/>
 							</field>
 							<field name="menubarDescriptor">
 								<menu>
 									<field name="label">
-										<String>BauDi</String>
+										<String>JRA-Postal Objects</String>
 									</field>
 									<field name="accessKey">
 										<String></String>
@@ -286,10 +104,21 @@
 										<menuEntry-array>
 											<menuItem>
 												<field name="actionID">
+													<String>makeIndex</String>
+												</field>
+											</menuItem>
+											<menuSeparator/>
+											<menuItem>
+												<field name="actionID">
 													<String>newFileID</String>
 												</field>
 											</menuItem>
 											<menuSeparator/>
+											<menuItem>
+												<field name="actionID">
+													<String>addNote</String>
+												</field>
+											</menuItem>
 										</menuEntry-array>
 									</field>
 									<field name="context">
